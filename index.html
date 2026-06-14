@@ -464,17 +464,6 @@
     <div class="food-item" onclick="openFood('yangfang')"><div class="fi-emoji"><img src="food6.gif" alt="羊方藏鱼" width="56" height="56"></div><h4>羊方藏鱼</h4><p>徐州饭店<br>人均 ¥85</p></div>
   </div>
 
-  <!-- 噜噜表情包装饰 -->
-  <div style="display:flex;justify-content:space-around;align-items:center;padding:12px 0;gap:8px;flex-wrap:wrap;margin-top:4px">
-    <img src="deco1.gif" width="60" height="60" style="border-radius:50%;animation:luluFloat 3.5s ease-in-out infinite;animation-delay:0s;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))">
-    <img src="deco2.gif" width="60" height="60" style="border-radius:50%;animation:luluFloat 3.5s ease-in-out infinite;animation-delay:.6s;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))">
-    <img src="deco3.gif" width="60" height="60" style="border-radius:50%;animation:luluFloat 3.5s ease-in-out infinite;animation-delay:1.2s;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))">
-    <img src="deco4.gif" width="60" height="60" style="border-radius:50%;animation:luluFloat 3.5s ease-in-out infinite;animation-delay:1.8s;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))">
-    <style>
-    @keyframes luluFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    </style>
-  </div>
-
 </div>
 
 <!-- ═══ DAY 1 ═══ -->
@@ -582,11 +571,11 @@
 
 <!-- ═══ BOTTOM NAV ═══ -->
 <nav id="bottom-nav">
-  <button class="bn-item active" data-page="home" onclick="navTo('home')"><span class="bn-icon">🏠</span>首页</button>
-  <button class="bn-item" data-page="day1" onclick="navTo('day1')"><span class="bn-icon">📅</span>行程</button>
-  <button class="bn-item" data-page="spots" onclick="navTo('spots')"><span class="bn-icon">🏛️</span>景点</button>
-  <button class="bn-item" data-page="food" onclick="navTo('food')"><span class="bn-icon">🍽️</span>美食</button>
-  <button class="bn-item" data-page="couple" onclick="navTo('couple')"><span class="bn-icon">💕</span>我们</button>
+  <button class="bn-item active" data-page="home" onclick="navTo('home')"><span class="bn-icon"><img src="deco1.gif" width="26" height="26" style="border-radius:50%"></span>首页</button>
+  <button class="bn-item" data-page="day1" onclick="navTo('day1')"><span class="bn-icon"><img src="deco2.gif" width="26" height="26" style="border-radius:50%"></span>行程</button>
+  <button class="bn-item" data-page="spots" onclick="navTo('spots')"><span class="bn-icon"><img src="deco3.gif" width="26" height="26" style="border-radius:50%"></span>景点</button>
+  <button class="bn-item" data-page="food" onclick="navTo('food')"><span class="bn-icon"><img src="deco4.gif" width="26" height="26" style="border-radius:50%"></span>美食</button>
+  <button class="bn-item" data-page="couple" onclick="navTo('couple')"><span class="bn-icon"><img src="nav5.gif" width="26" height="26" style="border-radius:50%"></span>我们</button>
 </nav>
 
 <script>
