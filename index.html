@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="徐州攻略">
+<meta name="theme-color" content="#1a1a2e">
+<title>徐州攻略懒人版 · 6.22-6.25</title>
+<link rel="manifest" href="/xuzhou-manifest.json">
+  <!-- Google Fonts 已移除，使用系统自带中文字体（iOS苹方/Android思源/Windows微软雅黑） -->
+<style>
+  :root{
+    --gold:#c9a96e;--red:#b5343a;--jade:#5b8c5a;
+    --bg:#0f0f1a;--surface:#1a1a2e;--card:#222238;
+    --text:#e8e0d5;--muted:#999;--dim:#666;
+    --border:rgba(255,255,255,.06);
+    --safe-b:env(safe-area-inset-bottom,16px);
+    --nav-h:64px;
+  }
+  body.light{
+    --bg:#f5f0e8;--surface:#fff;--card:#fff;
+    --text:#2a2018;--muted:#777;--dim:#aaa;
+    --border:rgba(0,0,0,.06);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:16px;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC','WenQuanYi Micro Hei',sans-serif;
+    background:var(--bg);color:var(--text);min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+    padding-bottom:calc(var(--nav-h) + var(--safe-b) + 8px);
+    overflow-x:hidden;transition:background .4s,color .4s;
+  }
+  body.splash-shown{overflow:hidden}
+
+  #splash{
+    position:fixed;inset:0;z-index:9999;background:linear-gradient(170deg,#1a1a2e 0%,#2d1f1a 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity .5s,visibility .5s;
+  }
+  #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+  #splash .s-logo{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:3rem;color:var(--gold);font-weight:900}
+  #splash .s-sub{font-size:1rem;color:var(--muted);margin-top:12px;letter-spacing:.08em}
+  #splash .s-loader{width:40px;height:2px;background:var(--gold);margin-top:32px;border-radius:1px;animation:pulse 1.2s infinite}
+  @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  #topbar{
+    position:sticky;top:0;z-index:100;background:rgba(15,15,26,.92);backdrop-filter:blur(16px);
+    padding:12px 20px;display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid var(--border);
+  }
+  body.light #topbar{background:rgba(245,240,232,.92)}
+  #topbar .t-title{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:1.1rem;color:var(--gold);font-weight:700}
+  #topbar .t-actions{display:flex;gap:8px;align-items:center}
+  #theme-toggle{
+    width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);
+    background:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:all .3s;
+  }
+  body.light #theme-toggle{border-color:rgba(0,0,0,.15)}
+  #theme-toggle:active{transform:scale(.9)}
+
+  .page{display:none;padding:0 16px;animation:fadeIn .35s ease}
+  .page.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  .hero{
+    text-align:center;padding:40px 16px 28px;position:relative;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 20%,rgba(201,169,110,.12),transparent 60%);
+    border-radius:0 0 28px 28px;margin:0 -16px 24px;
+  }
+  .hero .pengcheng-watermark{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:8rem;color:var(--gold);
+    opacity:0;pointer-events:none;white-space:nowrap;z-index:0;
+    animation:pengchengFade 6s ease-in-out infinite;
+  }
+  @keyframes pengchengFade{
+    0%,100%{opacity:0;transform:translate(-50%,-50%) scale(.95)}
+    15%{opacity:.06;transform:translate(-50%,-50%) scale(1)}
+    85%{opacity:.06;transform:translate(-50%,-50%) scale(1)}
+  }
+  .hero>*:not(.pengcheng-watermark){position:relative;z-index:1}
+  .hero h1{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:2.6rem;color:var(--gold);font-weight:900;letter-spacing:.04em}
+  .hero .h-sub{font-size:.95rem;color:var(--muted);margin-top:6px;letter-spacing:.06em}
+  .hero .h-dates{margin-top:16px;display:inline-block;background:rgba(181,52,58,.2);color:#e8a0a0;padding:8px 20px;border-radius:20px;font-size:.82rem}
+
+  .badge-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+  .badge{font-size:.68rem;padding:4px 10px;border-radius:10px;background:var(--card);color:var(--muted);border:1px solid var(--border)}
+  .badge.warn{background:rgba(181,52,58,.15);color:#e8a0a0;border-color:rgba(181,52,58,.3)}
+
+  .weather-strip{display:flex;gap:8px;overflow-x:auto;padding:0 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:20px}
+  .weather-strip::-webkit-scrollbar{display:none}
+  .weather-chip{
+    flex:0 0 auto;padding:10px 16px;background:var(--card);border-radius:16px;
+    text-align:center;min-width:78px;border:1px solid var(--border);
+  }
+  .weather-chip .wc-date{font-size:.7rem;color:var(--dim);margin-bottom:2px}
+  .weather-chip .wc-icon{font-size:1.6rem;margin:4px 0}
+  .weather-chip .wc-temp{font-size:.85rem;color:var(--text);font-weight:700}
+  .weather-chip .wc-desc{font-size:.65rem;color:var(--muted)}
+  .weather-chip.today{border-color:var(--gold);background:rgba(201,169,110,.08)}
+
+  .day-strip{display:flex;gap:10px;overflow-x:auto;padding:0 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .day-strip::-webkit-scrollbar{display:none}
+  .day-chip{
+    flex:0 0 auto;padding:14px 18px;background:var(--card);border-radius:16px;
+    text-align:center;min-width:90px;cursor:pointer;transition:all .2s;
+    border:1px solid transparent;
+  }
+  .day-chip:active{transform:scale(.96)}
+  .day-chip .dc-num{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:1.8rem;color:var(--gold);font-weight:900}
+  .day-chip .dc-date{font-size:.7rem;color:var(--dim);margin-top:2px}
+  .day-chip .dc-label{font-size:.78rem;color:var(--muted);margin-top:4px}
+
+  .section-hd{display:flex;align-items:center;gap:10px;margin:28px 0 16px}
+  .section-hd .sh-icon{font-size:1.3rem}
+  .section-hd .sh-title{font-size:1.1rem;font-weight:700;color:var(--text)}
+  .section-hd .sh-line{flex:1;height:1px;background:rgba(255,255,255,.08)}
+
+  .spot-scroll{display:flex;gap:14px;overflow-x:auto;padding:0 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
+  .spot-scroll::-webkit-scrollbar{display:none}
+  .spot-card-h{
+    flex:0 0 260px;scroll-snap-align:start;
+    background:var(--card);border-radius:20px;overflow:hidden;
+    cursor:pointer;transition:transform .2s;border:1px solid var(--border);
+  }
+  .spot-card-h:active{transform:scale(.97)}
+  .spot-card-h .sch-img{
+    height:140px;display:flex;align-items:center;justify-content:center;
+    font-size:3rem;position:relative;overflow:hidden;
+  }
+  .spot-card-h .sch-info{padding:14px 16px}
+  .spot-card-h .sch-info h3{font-size:.95rem;color:var(--text);margin-bottom:4px}
+  .spot-card-h .sch-info .sch-meta{font-size:.72rem;color:var(--gold);margin-bottom:4px}
+  .spot-card-h .sch-info p{font-size:.75rem;color:var(--muted);line-height:1.4}
+  .need-book{color:var(--red)!important;font-weight:700}
+
+  .food-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .food-item{background:var(--card);border-radius:16px;padding:18px 14px;text-align:center;border:1px solid var(--border);cursor:pointer;transition:transform .2s}
+  .food-item:active{transform:scale(.97)}
+  .food-item .fi-emoji{font-size:2.2rem;margin-bottom:8px}
+  .food-item h4{font-size:.9rem;color:var(--text);margin-bottom:4px}
+  .food-item p{font-size:.72rem;color:var(--dim);line-height:1.4}
+
+  .checklist .cl-item{
+    display:flex;align-items:center;gap:14px;padding:14px 16px;
+    background:var(--card);border-radius:14px;margin-bottom:10px;
+    cursor:pointer;transition:all .2s;border:1px solid var(--border);
+  }
+  .checklist .cl-item.done{opacity:.5;text-decoration:line-through}
+  .checklist .cl-item .cl-check{
+    width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.2);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem;
+    transition:all .2s;
+  }
+  .checklist .cl-item.done .cl-check{background:var(--jade);border-color:var(--jade)}
+
+  /* timeline */
+  .tl-node{cursor:pointer;display:flex;gap:14px;margin-bottom:10px;align-items:flex-start}
+  .tl-node .tl-dot{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px}
+  .tl-node .tl-body h4{font-size:.9rem;color:var(--text);margin-bottom:2px}
+  .tl-node .tl-body .tl-time-label{font-size:.7rem;color:var(--gold);margin-bottom:4px}
+  .tl-node .tl-body .tl-expand-hint{font-size:.65rem;color:var(--dim);margin-top:2px;display:inline-block}
+  .tl-node .tl-body .tl-detail{display:none;margin-top:8px;padding:10px 14px;background:rgba(201,169,110,.06);border-radius:10px;font-size:.75rem;color:var(--muted);line-height:1.5}
+  .tl-node.expanded .tl-body .tl-detail{display:block}
+  .tl-node .tl-body .tl-map-link{display:none;margin-top:6px;font-size:.7rem;color:var(--gold);text-decoration:none}
+  .tl-node.expanded .tl-body .tl-map-link{display:inline-block}
+
+  /* carousel */
+  .carousel{position:relative;width:100%;height:200px;border-radius:16px;overflow:hidden;margin-bottom:20px}
+  .carousel .car-slides{display:flex;width:100%;height:100%;transition:transform .4s ease}
+  .carousel .car-slide{
+    flex:0 0 100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:3rem;position:relative;
+  }
+  .carousel .car-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+  .carousel .car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:all .3s}
+  .carousel .car-dot.active{background:var(--gold);width:18px;border-radius:3px}
+  .carousel .car-prev,.carousel .car-next{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+    width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);border:none;color:#fff;
+    font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .carousel .car-prev{left:8px}.carousel .car-next{right:8px}
+
+  /* modal */
+  #modal-overlay{
+    position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);
+    display:none;align-items:flex-end;justify-content:center;
+  }
+  #modal-overlay.show{display:flex}
+  #modal{
+    background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-height:85vh;
+    overflow-y:auto;padding:24px 20px 40px;animation:slideUp .3s ease;
+  }
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  #modal .m-close{
+    width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);
+    border:none;color:var(--text);font-size:1.2rem;cursor:pointer;float:right;z-index:10;position:relative;
+  }
+  #modal h2{font-size:1.4rem;color:var(--gold);margin-bottom:4px}
+  #modal .m-meta{font-size:.8rem;color:var(--dim);margin-bottom:16px}
+  #modal p{font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:12px}
+  #modal .m-tip{background:rgba(201,169,110,.1);border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 12px 12px 0;font-size:.82rem;color:var(--gold);margin:16px 0}
+  #modal .m-info-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  #modal .m-info-tag{background:var(--card);padding:8px 14px;border-radius:12px;font-size:.78rem;color:var(--text);border:1px solid var(--border)}
+  #modal .m-info-tag strong{color:var(--gold);margin-right:4px}
+
+  #bottom-nav{
+    position:fixed;bottom:0;left:0;right:0;z-index:150;
+    background:rgba(15,15,26,.94);backdrop-filter:blur(16px);
+    border-top:1px solid var(--border);
+    display:flex;justify-content:space-around;
+    padding:6px 0 var(--safe-b);
+  }
+  body.light #bottom-nav{background:rgba(245,240,232,.94)}
+  #bottom-nav .bn-item{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:8px 12px;cursor:pointer;transition:all .2s;
+    background:none;border:none;color:var(--dim);font-size:.65rem;
+  }
+  #bottom-nav .bn-item.active{color:var(--gold)}
+  #bottom-nav .bn-item .bn-icon{font-size:1.4rem}
+
+  #install-banner{
+    display:none;position:fixed;top:12px;left:50%;transform:translateX(-50%);
+    z-index:180;background:var(--gold);color:#1a1a2e;padding:12px 24px;
+    border-radius:24px;font-size:.82rem;font-weight:700;cursor:pointer;
+    box-shadow:0 4px 20px rgba(201,169,110,.3);white-space:nowrap;
+    animation:bounceIn .5s ease;
+  }
+  @keyframes bounceIn{0%{transform:translateX(-50%) translateY(-60px);opacity:0}60%{transform:translateX(-50%) translateY(4px)}100%{transform:translateX(-50%) translateY(0);opacity:1}}
+  #install-banner.show{display:block}
+
+  @media(min-width:768px){
+    .food-row{grid-template-columns:repeat(3,1fr)}
+    .spot-scroll{gap:18px}
+    .spot-card-h{flex:0 0 300px}
+  }
+
+  .bg-cloud-lake{background:linear-gradient(180deg,#1a3a4a 0%,#2a5a6a 40%,#1a2a3a 100%)}
+  .bg-tomb{background:linear-gradient(180deg,#1a1a1a 0%,#2a2018 50%,#1a1810 100%)}
+  .bg-oldtown{background:linear-gradient(180deg,#2a2a3a 0%,#3a3030 50%,#2a2520 100%)}
+  .bg-garden{background:linear-gradient(180deg,#1a2a1a 0%,#2a4a2a 50%,#1a2a1a 100%)}
+  .bg-sunset{background:linear-gradient(180deg,#3a2010 0%,#c96330 40%,#1a2a4a 100%)}
+  .bg-museum{background:linear-gradient(180deg,#1a1a2a 0%,#2a2a3a 50%,#1a1a2a 100%)}
+  .bg-diguoji{background:linear-gradient(135deg,#3a1a0a 0%,#5a2820 50%,#2a1810 100%)}
+  .bg-bazirou{background:linear-gradient(135deg,#3a2a10 0%,#5a4020 50%,#2a2010 100%)}
+  .bg-latang{background:linear-gradient(135deg,#2a1a1a 0%,#4a2a2a 50%,#2a1a10 100%)}
+  .bg-luomo{background:linear-gradient(135deg,#3a3a10 0%,#5a5a20 50%,#2a2a10 100%)}
+  .bg-shaokao{background:linear-gradient(135deg,#3a1010 0%,#5a2020 50%,#2a1010 100%)}
+  .bg-yangfang{background:linear-gradient(135deg,#1a2a3a 0%,#2a4a5a 50%,#1a2a3a 100%)}
+</style>
+</head>
+<body class="splash-shown">
+
+<div id="splash">
+  <div class="s-logo">徐州攻略</div>
+  <div class="s-sub">6.22-6.25 · 双人游记 · 懒人版</div>
+  <div class="s-loader"></div>
+</div>
+
+<div id="install-banner">📲 点击添加到桌面，随时查看</div>
+
+<div id="topbar">
+  <span class="t-title" id="topbar-title">徐州情侣攻略</span>
+  <div class="t-actions">
+    <button id="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">☀️</button>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="pengcheng-watermark">彭 城</div>
+    <h1>徐州</h1>
+    <div class="h-sub">双 人 游 记</div>
+    <div class="h-dates">📅 6月22日中午抵达 → 6月25日下午返程</div>
+    <div class="badge-row">
+      <span class="badge warn">😴 每日11:00出发</span>
+      <span class="badge">4天3夜</span>
+      <span class="badge">🏨 泉山区</span>
+      <span class="badge">🚄 徐州东站</span>
+    </div>
+  </div>
+
+  <div class="section-hd"><span class="sh-icon">🌤️</span><span class="sh-title">天气预报</span><span class="sh-line"></span></div>
+  <div class="weather-strip">
+    <div class="weather-chip today"><div class="wc-date">6/22 周日</div><div class="wc-icon">⛅</div><div class="wc-temp">33° / 24°</div><div class="wc-desc">多云转晴</div></div>
+    <div class="weather-chip"><div class="wc-date">6/23 周一</div><div class="wc-icon">☀️</div><div class="wc-temp">35° / 25°</div><div class="wc-desc">晴</div></div>
+    <div class="weather-chip"><div class="wc-date">6/24 周二</div><div class="wc-icon">⛅</div><div class="wc-temp">34° / 24°</div><div class="wc-desc">多云</div></div>
+    <div class="weather-chip"><div class="wc-date">6/25 周三</div><div class="wc-icon">🌧️</div><div class="wc-temp">31° / 23°</div><div class="wc-desc">阵雨</div></div>
+  </div>
+  <div style="text-align:center;font-size:.68rem;color:var(--dim);margin:-12px 0 16px">☀️ 六月徐州偏热 33°+ · 注意防晒补水 · 带遮阳伞</div>
+
+  <div class="section-hd"><span class="sh-icon">🗓️</span><span class="sh-title">每日概览</span><span class="sh-line"></span></div>
+  <div class="day-strip">
+    <div class="day-chip" onclick="navTo('day1')"><div class="dc-num">01</div><div class="dc-date">6/22</div><div class="dc-label">初见彭城</div></div>
+    <div class="day-chip" onclick="navTo('day2')"><div class="dc-num">02</div><div class="dc-date">6/23</div><div class="dc-label">穿越两汉</div></div>
+    <div class="day-chip" onclick="navTo('day3')"><div class="dc-num">03</div><div class="dc-date">6/24</div><div class="dc-label">古韵悠然</div></div>
+    <div class="day-chip" onclick="navTo('day4')"><div class="dc-num">04</div><div class="dc-date">6/25</div><div class="dc-label">告别彭城</div></div>
+  </div>
+
+  <div class="section-hd"><span class="sh-icon">🏛️</span><span class="sh-title">必游景点</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">← 左右滑动 →</span></div>
+  <div class="spot-scroll">
+    <div class="spot-card-h" onclick="openSpot('yunlong')"><div class="sch-img bg-cloud-lake">🌊⛰️</div><div class="sch-info"><h3>云龙湖 & 云龙山</h3><div class="sch-meta">免费 · 泉山区 · 3-4h</div><p>徐州版"西湖"，环湖漫步+登山观日落</p></div></div>
+    <div class="spot-card-h" onclick="openSpot('chuwang')"><div class="sch-img bg-tomb">🏛️🗿</div><div class="sch-info"><h3>狮子山楚王陵</h3><div class="sch-meta">¥60/人 · 云龙区 · 2h</div><p>"东方金字塔"——西汉楚王地下宫殿</p></div></div>
+    <div class="spot-card-h" onclick="openSpot('guishan')"><div class="sch-img bg-tomb">🪨⚰️</div><div class="sch-info"><h3>龟山汉墓</h3><div class="sch-meta">¥25/人 · 鼓楼区 · 1.5h</div><p>夫妇合葬墓，平行甬道精度千古之谜</p></div></div>
+    <div class="spot-card-h" onclick="openSpot('yaowan')"><div class="sch-img bg-oldtown">🛶🏘️</div><div class="sch-info"><h3>窑湾古镇</h3><div class="sch-meta">免大门票 · 新沂 · 4h</div><p>摇橹船+运河古镇，苏北小江南</p></div></div>
+    <div class="spot-card-h" onclick="openSpot('museum')"><div class="sch-img bg-museum">🏺👑</div><div class="sch-info"><h3>徐州博物馆 <span class="need-book">（需预约）</span></h3><div class="sch-meta">免费 · 泉山区 · 2h</div><p>金缕玉衣+汉画像石，公众号预约</p></div></div>
+    <div class="spot-card-h" onclick="openSpot('huilong')"><div class="sch-img bg-oldtown">🏮📸</div><div class="sch-info"><h3>回龙窝 & 戏马台</h3><div class="sch-meta">免费 · 鼓楼区 · 2h</div><p>明清民居+咖啡馆+手作+霸王遗风</p></div></div>
+  </div>
+
+  <div class="section-hd"><span class="sh-icon">🍽️</span><span class="sh-title">必吃美食</span><span class="sh-line"></span></div>
+  <div class="food-row">
+    <div class="food-item" onclick="openFood('diguoji')"><div class="fi-emoji">🍗</div><h4>地锅鸡</h4><p>大张烙馍村<br>人均 ¥45</p></div>
+    <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji">🥩</div><h4>把子肉</h4><p>周记把子肉<br>人均 ¥25</p></div>
+    <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji">🍜</div><h4>徐州辣汤</h4><p>两来风<br>人均 ¥10</p></div>
+    <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji">🍖</div><h4>徐州烧烤</h4><p>大西北烧烤<br>人均 ¥60</p></div>
+  </div>
+</div>
+
+<!-- ═══ DAY 1 ═══ -->
+<div class="page" id="page-day1">
+  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 1</h1><div class="h-sub">6月22日 周日 · 初见彭城</div><div class="h-dates">🌅 中午抵达 → 云龙湖 → 云龙山日落 → 夜市</div></div>
+  <div class="section-hd"><span class="sh-icon">⏱️</span><span class="sh-title">行程时间线</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">点击展开详情</span></div>
+  <div class="timeline" id="timeline-day1"></div>
+  <div style="background:linear-gradient(135deg,rgba(181,52,58,.15),rgba(201,169,110,.08));border:1px solid rgba(201,169,110,.2);border-radius:16px;padding:18px 20px;margin:12px 0;color:#e8c8a0;font-size:.82rem;line-height:1.6">
+    <strong>❤️ 今日最佳：</strong>下午五点半登上云龙山观景台，整个云龙湖在你俩脚下铺成一面金色的镜子。晚风从湖面吹过来的时候，她会不由自主靠在你肩上——别说话，就安静看日落。
+  </div>
+</div>
+
+<!-- ═══ DAY 2 ═══ -->
+<div class="page" id="page-day2">
+  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 2</h1><div class="h-sub">6月23日 周一 · 穿越两汉</div><div class="h-dates">🏛️ 楚王陵 → 兵马俑 → 博物馆 → 烧烤之夜</div></div>
+  <div class="section-hd"><span class="sh-icon">⏱️</span><span class="sh-title">行程时间线</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">点击展开详情</span></div>
+  <div class="timeline" id="timeline-day2"></div>
+  <div style="background:linear-gradient(135deg,rgba(181,52,58,.15),rgba(201,169,110,.08));border:1px solid rgba(201,169,110,.2);border-radius:16px;padding:18px 20px;margin:12px 0;color:#e8c8a0;font-size:.82rem;line-height:1.6">
+    <strong>❤️ 今日最佳：</strong>楚王陵墓道深处幽暗的斜坡，灯只照到脚下几步远。牵紧她的手——两千年间来过这里的帝王将相早已化为尘土，这一刻只有你俩的温度是真实的。
+  </div>
+</div>
+
+<!-- ═══ DAY 3 ═══ -->
+<div class="page" id="page-day3">
+  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 3</h1><div class="h-sub">6月24日 周二 · 古韵悠然</div><div class="h-dates">🪨 龟山汉墓 → 彭祖园 → 窑湾古镇 → 摇橹船</div></div>
+  <div class="section-hd"><span class="sh-icon">⏱️</span><span class="sh-title">行程时间线</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">点击展开详情</span></div>
+  <div class="timeline" id="timeline-day3"></div>
+  <div style="background:linear-gradient(135deg,rgba(181,52,58,.15),rgba(201,169,110,.08));border:1px solid rgba(201,169,110,.2);border-radius:16px;padding:18px 20px;margin:12px 0;color:#e8c8a0;font-size:.82rem;line-height:1.6">
+    <strong>❤️ 今日最佳：</strong>窑湾摇橹船穿过石拱桥的瞬间——船娘小调停了，只剩木桨划水声。她靠过来看桥洞青苔，你看着她被夕阳映红的侧脸。这就是旅行的意义。
+  </div>
+</div>
+
+<!-- ═══ DAY 4 ═══ -->
+<div class="page" id="page-day4">
+  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 4</h1><div class="h-sub">6月25日 周三 · 告别彭城</div><div class="h-dates">🏮 戏马台 → 回龙窝 → 饯行午餐 → 下午返程</div></div>
+  <div class="section-hd"><span class="sh-icon">⏱️</span><span class="sh-title">行程时间线</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">点击展开详情</span></div>
+  <div class="timeline" id="timeline-day4"></div>
+  <div style="background:linear-gradient(135deg,rgba(181,52,58,.15),rgba(201,169,110,.08));border:1px solid rgba(201,169,110,.2);border-radius:16px;padding:18px 20px;margin:12px 0;color:#e8c8a0;font-size:.82rem;line-height:1.6">
+    <strong>❤️ 今日最佳：</strong>回龙窝青石板小巷——「猫的天空之城」各自写一张明信片，寄给一年后的对方。最好的告别——带着期待离开，带着约定回来。
+  </div>
+</div>
+
+<!-- ═══ SPOTS ═══ -->
+<div class="page" id="page-spots">
+  <div class="section-hd"><span class="sh-icon">🏛️</span><span class="sh-title">全部景点</span><span class="sh-line"></span></div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div onclick="openSpot('yunlong')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-cloud-lake">🌊⛰️</div><div class="sch-info"><h3>云龙湖 & 云龙山</h3><div class="sch-meta">免费 · 泉山区 · 3-4h</div><p>环湖5km+登山20分钟到观景台，6月日落约19:20</p></div></div>
+    <div onclick="openSpot('chuwang')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-tomb">🏛️🗿</div><div class="sch-info"><h3>狮子山楚王陵</h3><div class="sch-meta">¥60/人 · 云龙区 · 2h</div><p>西汉楚王陵+汉兵马俑+水下兵马俑馆联票</p></div></div>
+    <div onclick="openSpot('guishan')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-tomb">🪨⚰️</div><div class="sch-info"><h3>龟山汉墓</h3><div class="sch-meta">¥25/人 · 鼓楼区 · 1.5h</div><p>楚襄王夫妇合葬墓，平行甬道精度至今成谜</p></div></div>
+    <div onclick="openSpot('museum')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-museum">🏺👑</div><div class="sch-info"><h3>徐州博物馆 <span class="need-book">（需预约）</span></h3><div class="sch-meta">免费（公众号预约）· 泉山区 · 周一闭馆</div><p>金缕玉衣+汉画像石+汉代玉器</p></div></div>
+    <div onclick="openSpot('yaowan')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-oldtown">🛶🏘️</div><div class="sch-info"><h3>窑湾古镇</h3><div class="sch-meta">免大门票 · 新沂市 · 4h</div><p>明清运河商埠，摇橹船¥30/人，距市区约50km</p></div></div>
+    <div onclick="openSpot('pengzu')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-garden">🌳🦚</div><div class="sch-info"><h3>彭祖园</h3><div class="sch-meta">免费 · 泉山区 · 1h</div><p>古树遮天+彭祖雕像+小动物园，梧桐林荫道适合散步</p></div></div>
+    <div onclick="openSpot('huilong')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-oldtown">🏮📸</div><div class="sch-info"><h3>回龙窝 & 戏马台</h3><div class="sch-meta">免费 · 鼓楼区 · 2h</div><p>明清民居+咖啡馆+手作工坊+项羽阅兵台</p></div></div>
+    <div onclick="openSpot('hubushan')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-sunset">🏮🌃</div><div class="sch-info"><h3>户部山夜市</h3><div class="sch-meta">免费 · 鼓楼区 · 晚上逛</div><p>古民居街区+夜市小吃，烙馍卷馓子+蛙鱼+炸串</p></div></div>
+  </div>
+</div>
+
+<!-- ═══ FOOD ═══ -->
+<div class="page" id="page-food">
+  <div class="section-hd"><span class="sh-icon">🍽️</span><span class="sh-title">徐州必吃</span><span class="sh-line"></span></div>
+  <div class="food-row">
+    <div class="food-item" onclick="openFood('diguoji')"><div class="fi-emoji">🍗</div><h4>地锅鸡</h4><p>大张烙馍村<br>彭城一号<br>人均 ¥45</p></div>
+    <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji">🥩</div><h4>把子肉</h4><p>周记把子肉<br>怪味愚<br>人均 ¥25</p></div>
+    <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji">🍜</div><h4>徐州辣汤</h4><p>两来风<br>马市街饣它汤<br>人均 ¥10</p></div>
+    <div class="food-item" onclick="openFood('luomo')"><div class="fi-emoji">🫓</div><h4>烙馍</h4><p>街边任意摊<br>卷菜卷肉卷一切<br>人均 ¥5</p></div>
+    <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji">🍖</div><h4>徐州烧烤</h4><p>大西北烧烤<br>老郑烧烤<br>人均 ¥60</p></div>
+    <div class="food-item" onclick="openFood('yangfang')"><div class="fi-emoji">🐟</div><h4>羊方藏鱼</h4><p>徐州饭店<br>四千年名菜<br>人均 ¥85</p></div>
+  </div>
+  <div class="section-hd"><span class="sh-icon">🏨</span><span class="sh-title">住宿推荐</span><span class="sh-line"></span></div>
+  <div class="food-row">
+    <div class="food-item"><div class="fi-emoji">🌊</div><h4>云龙湖湖景区</h4><p>涵田度假酒店<br>金陵云龙湖酒店<br>¥300-450/晚</p></div>
+    <div class="food-item"><div class="fi-emoji">🏙️</div><h4>老城区中心</h4><p>彭城壹号周边<br>下楼就是美食街<br>¥180-280/晚</p></div>
+    <div class="food-item"><div class="fi-emoji">🚉</div><h4>高铁站周边</h4><p>徐州东站附近<br>最后一天赶车方便<br>¥150-220/晚</p></div>
+    <div class="food-item"><div class="fi-emoji">🏡</div><h4>民宿体验</h4><p>回龙窝/户部山<br>古民居独院民宿<br>¥250-400/晚</p></div>
+  </div>
+</div>
+
+<!-- ═══ COUPLE ═══ -->
+<div class="page" id="page-couple">
+  <div class="section-hd"><span class="sh-icon">💕</span><span class="sh-title">情侣必打卡</span><span class="sh-line"></span></div>
+  <div class="checklist" id="checklist">
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🌅 云龙山观景台看日落</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🚣 云龙湖脚踏船荡漾湖心</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🏛️ 楚王陵牵手穿越千年</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🛶 窑湾古镇摇橹船</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🍗 两人分一份地锅鸡</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>📸 回龙窝青石板街拍</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🌃 户部山夜市牵手逛吃</div>
+  </div>
+  <div class="section-hd"><span class="sh-icon">📝</span><span class="sh-title">出行备忘</span><span class="sh-line"></span></div>
+  <div class="checklist" id="packlist">
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🪪 身份证</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🔋 充电宝 + 数据线</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>☀️ 防晒霜 + 遮阳伞</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>📸 自拍杆 / 三脚架</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>💊 常用药品（肠胃药+创可贴）</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🧥 薄外套（早晚温差）</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🎫 徐州博物馆预约确认</div>
+  </div>
+</div>
+
+<!-- ═══ MODAL ═══ -->
+<div id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div id="modal"></div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav id="bottom-nav">
+  <button class="bn-item active" data-page="home" onclick="navTo('home')"><span class="bn-icon">🏠</span>首页</button>
+  <button class="bn-item" data-page="day1" onclick="navTo('day1')"><span class="bn-icon">📅</span>行程</button>
+  <button class="bn-item" data-page="spots" onclick="navTo('spots')"><span class="bn-icon">🏛️</span>景点</button>
+  <button class="bn-item" data-page="food" onclick="navTo('food')"><span class="bn-icon">🍽️</span>美食</button>
+  <button class="bn-item" data-page="couple" onclick="navTo('couple')"><span class="bn-icon">💕</span>我们</button>
+</nav>
+
+<script>
+// ── Theme ──
+(function(){
+  const saved=localStorage.getItem('xuzhou-theme-late');
+  if(saved==='light') document.body.classList.add('light');
+  updateThemeIcon();
+})();
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('xuzhou-theme-late',document.body.classList.contains('light')?'light':'dark');
+  updateThemeIcon();
+}
+function updateThemeIcon(){
+  const btn=document.getElementById('theme-toggle');
+  if(btn) btn.textContent=document.body.classList.contains('light')?'🌙':'☀️';
+}
+
+// ── Splash ──
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown')},1400);
+
+// ── Navigation ──
+const pages={home:'page-home',day1:'page-day1',day2:'page-day2',day3:'page-day3',day4:'page-day4',spots:'page-spots',food:'page-food',couple:'page-couple'};
+const titles={home:'徐州情侣攻略',day1:'Day1 · 初见彭城',day2:'Day2 · 穿越两汉',day3:'Day3 · 古韵悠然',day4:'Day4 · 告别彭城',spots:'全部景点',food:'美食住宿',couple:'情侣打卡'};
+
+function navTo(key){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById(pages[key]);if(el)el.classList.add('active');
+  document.querySelectorAll('#bottom-nav .bn-item').forEach(b=>{
+    const match=b.dataset.page===key||(key.startsWith('day')&&b.dataset.page==='day1');
+    b.classList.toggle('active',match);
+  });
+  document.getElementById('topbar-title').textContent=titles[key]||'徐州情侣攻略';
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll('.day-chip').forEach((chip,i)=>{
+  chip.addEventListener('click',()=>navTo('day'+(i+1)));
+});
+
+// ═══════════════ TIMELINE DATA (ALL STARTING ~11:00) ═══════════════
+const timelineData = {
+  day1: [
+    {time:'12:00',title:'抵达徐州 · 入住酒店',desc:'徐州东站（推荐高铁）或观音机场 → 打车约30分钟到泉山区酒店 → 放行李换舒服衣服',detail:'徐州东站距市中心约12km，打车¥30。观音机场距市区约45km，打车¥80-100。酒店选泉山区云龙湖周边最方便。入住后稍作休整，准备出发。',map:'徐州东站'},
+    {time:'13:00',title:'午餐 · 第一顿地锅鸡',desc:'「大张烙馍村」（泉山区湖北路）或「彭城一号」——铁锅端上来还在咕嘟，面饼贴锅边吸饱汤汁，两人一份地锅鸡+烙馍卷馓子刚好',detail:'大张烙馍村：泉山区湖北路与二环西路交叉口。彭城一号在市中心彭城路。两人推荐：地锅鸡¥88 + 烙馍卷馓子¥18 + 米饭，¥120吃饱。',map:'大张烙馍村'},
+    {time:'15:00',title:'云龙湖景区 · 环湖漫步+脚踏船',desc:'音乐厅广场→湖心岛→苏公塔→水上世界，走走停停约2h。湖心岛码头租脚踏船¥40/30min，两个人踩着船漂在湖中央 🚣',detail:'环湖约5km，可骑共享单车或坐景区电瓶车¥10/人。脚踏船在湖心岛码头，¥40/30分钟押金¥100。强烈推荐！湖中央看四周山色特别惬意。',map:'云龙湖音乐厅广场'},
+    {time:'17:30',title:'云龙山观景台 · 等日落',desc:'西门上山步行20分钟登观景台。6月日落约19:20，金色光线打满湖面和老城天际线——徐州最美的20分钟 📸',detail:'云龙山西门免费入，步行约20分钟登顶。别坐索道，登山过程更有感觉。观景台最上层栏杆是最佳拍摄位——逆光人像超美，记得带相机。',map:'云龙山观景台'},
+    {time:'19:30',title:'户部山夜市 · 逛吃晚餐',desc:'下山步行10分钟到户部山历史文化街区——古民居灯笼亮起很有氛围，烙馍卷馓子、蛙鱼、炸串一路吃，当晚饭解决',detail:'推荐小吃：烙馍卷馓子¥8、蛙鱼¥6、炸串¥2/串。古民居亮灯后适合拍照，穿浅色衣服更出片。一路边走边吃就是最接地气的徐州夜生活。',map:'户部山历史文化街区'},
+    {time:'22:00',title:'回酒店',desc:'第一天别太累，泡杯茶窝在一起翻翻明天的攻略，养足精神 💤',detail:'便利店买两瓶水+小零食带回酒店。睡前确认Day2行程：楚王陵→兵马俑→博物馆→烧烤。注意：徐州博物馆周一闭馆，6/23是周一，建议调整到Day3.',map:null}
+  ],
+  day2: [
+    {time:'11:00',title:'酒店出发 · 早午餐合一顿',desc:'睡到自然醒，酒店附近找家烙馍摊——现擀现烙卷上土豆丝海带丝卤蛋辣椒，¥5一个管饱。再来一碗辣汤配煎包，把早午餐一起解决',detail:'不用赶时间，酒店楼下随便一家烙馍摊都好吃。推荐搭配：烙馍卷菜¥5 + 辣汤¥5 + 煎包¥2×2 = 人均¥14。吃完出发去楚王陵。',map:null},
+    {time:'12:00',title:'狮子山楚王陵 · 地宫探秘',desc:'西汉第三代楚王刘戊陵墓，"东方金字塔"——整座山几乎被掏空，墓道深数十米，走在幽暗斜坡里石壁冰凉，空气里带着两千年泥土味',detail:'汉文化景区联票¥60/人：楚王陵+汉兵马俑博物馆+水下兵马俑馆，全部步行可达。中午人少，墓道里只有你俩的脚步声——两千年的约会。',map:'狮子山楚王陵'},
+    {time:'13:30',title:'汉兵马俑博物馆',desc:'楚王陵隔壁步行3分钟。六个陪葬坑出土四千多件兵马俑，比秦俑小但每个表情发型都不一样，水下兵马俑馆建在潭水上非常独特',detail:'三个馆游览顺序：楚王陵（1h）→汉兵马俑（30min）→水下兵马俑馆（20min）。水下馆玻璃地板下就是兵马俑坑，视角独一无二。',map:'汉兵马俑博物馆'},
+    {time:'15:00',title:'午餐 · 地道把子肉',desc:'「周记把子肉」（富国街）或「怪味愚」——五花三层炖到筷子一夹就断，肥而不腻，米饭浇上肉汁，加酱排骨卤蛋',detail:'周记把子肉：鼓楼区富国街。推荐：把子肉¥12+酱排骨¥15+卤蛋¥2+米饭¥2，两人¥50吃撑。下午两点多去不用排队。',map:'周记把子肉'},
+    {time:'16:30',title:'徐州博物馆 <span class="need-book">（需预约）</span>',desc:'⚠️ 注意：6/23是周一，博物馆可能闭馆！出发前在公众号确认。如果闭馆则调整到Day3。镇馆之宝金缕玉衣+汉画像石+汉代玉器，馆内空调足',detail:'公众号「徐州博物馆」提前1-2天预约，凭身份证入馆。如果周一闭馆就顺延到明天（Day3）上午，和龟山汉墓对调时间。',map:'徐州博物馆'},
+    {time:'18:30',title:'乾隆行宫 & 彭城壹号歇脚',desc:'博物馆后面乾隆行宫遗址精致小园林→步行到彭城壹号文创街区→「山海咖啡」露台看老城街景歇歇脚 ☕',detail:'乾隆行宫免费，10分钟逛完。彭城壹号山海咖啡人均¥25，露台先到先得。如果博物馆去不了，这段时间可以直接来彭城壹号逛+歇。',map:'彭城壹号'},
+    {time:'19:30',title:'徐州烧烤之夜 🔥',desc:'「大西北烧烤」民主南路或「老郑烧烤」——灵魂吃法：羊肉串撸下来卷进烙馍，肉汁面香一口炸开。必点：羊肉串/烤羊排/烤腰子/烤饼',detail:'大西北烧烤民主南路。推荐：羊肉串¥3×20+烤羊排¥15×2+烤腰子¥8×2+烙馍¥1×4=约¥120。记住：肉卷烙馍才是徐州正宗吃法！',map:'大西北烧烤'}
+  ],
+  day3: [
+    {time:'11:00',title:'酒店出发 · 街边早午餐',desc:'再来一碗辣汤+煎包锅贴，把徐州清晨的味道刻进记忆。如果昨天博物馆没去成，今天第一站补上',detail:'两来风解放路店离酒店不远。辣汤¥5+煎包¥2×4+锅贴¥2×2=人均¥13。吃完精神满满出发。',map:'两来风解放路店'},
+    {time:'12:30',title:'龟山汉墓 · 鬼斧神工',desc:'西汉楚襄王刘注夫妇合葬墓——两条平行甬道长56米，夹角精度1/16000，两千年前没激光怎么做到的至今是谜。走在甬道里两侧石壁完全对称，像穿过时空隧道',detail:'门票¥25/人，旁边圣旨博物馆+点石园石刻馆联票¥35/人。甬道内幽暗安静，牵手慢慢走——两千年前的工匠为这对夫妇建了永恒的家。',map:'龟山汉墓'},
+    {time:'14:00',title:'彭祖园 · 梧桐林荫',desc:'免费公园但比想象中大——古树遮天+彭祖雕像+小动物园（孔雀🦚）。两个人牵手在梧桐林荫道慢慢走，累了坐长椅看大爷下棋',detail:'泉山区，从龟山汉墓打车¥12/15分钟。园内彭祖雕像高38米，梧桐林荫道是拍照圣地——阳光透过树叶洒下来特别好看。',map:'彭祖园'},
+    {time:'15:30',title:'窑湾古镇出发',desc:'打车约45分钟到新沂窑湾。明清运河商埠，青石板路老票号当铺教堂——比江南古镇少80%游客更安静，窄巷屋檐几乎碰到一起',detail:'距市区约50km，打车单程¥80-100（45分钟），或租车一天约¥150。古镇免大门票，小景点联票¥40/人可选。建议15:00前出发保证有充足时间逛。',map:'窑湾古镇'},
+    {time:'17:00',title:'摇橹船 · 运河小调 🛶',desc:'码头坐摇橹船¥30/人，船娘摇橹唱苏北小调，老房子倒映运河水里，摇摇晃晃穿过石拱桥——最"江南"的半小时',detail:'码头在古镇中段，¥30/人。人少可跟船娘商量两人包船¥60。黄昏时段（17:00-18:00）光线最美，水巷里的光影绝了，记得录视频。',map:'窑湾古镇码头'},
+    {time:'18:30',title:'窑湾船菜 · 运河晚宴',desc:'临河馆子「窑湾船菜馆」或「运河人家」——运河鲜鱼、古镇酱蹄、桂花糖藕、银鱼跑蛋，看灯笼一盏一盏亮起来 🏮',detail:'推荐：运河鲜鱼¥58+古镇酱蹄¥38+桂花糖藕¥22+银鱼跑蛋¥28=人均¥70。靠河位置先到先得，建议18:00前到。灯笼亮起时整条水巷都在发光。',map:'窑湾船菜馆'},
+    {time:'20:30',title:'返回市区',desc:'打车回酒店约40分钟。如果还有精力，人民路散个步消消食',detail:'窑湾回市区约50km，打车¥80-100。提前用高德/滴滴约车，晚上古镇附近车少。Day3是最满的一天，回酒店泡个热水澡放松。',map:null}
+  ],
+  day4: [
+    {time:'11:00',title:'酒店退房 · 寄存行李',desc:'睡到自然醒收拾行李，跟前台沟通延迟退房或寄存行李。最后一天轻装上阵',detail:'大部分酒店可延迟到13:00退房或免费寄存行李。确认退房时间，把行李寄存在前台就可以轻松出门。',map:null},
+    {time:'11:30',title:'早午餐 · 最后一碗辣汤',desc:'再去「两来风」或马市街饣它汤——辣汤+煎包+锅贴终极三件套，把徐州清晨的味道刻进记忆再走',detail:'马市街饣它汤是徐州一绝，比辣汤更浓稠加了麦仁和鸡丝。配一份煎包锅贴，人均¥12。吃完这顿就该告别了。',map:'两来风解放路店'},
+    {time:'12:30',title:'戏马台 · 霸王遗风',desc:'公元前206年项羽灭秦后在此筑台阅兵。地势极高站台上俯瞰整个徐州老城——近处青砖灰瓦回龙窝，远处现代高楼和远山。两人并肩想象霸王在此指挥千军万马 ⚔️',detail:'户部山顶，免费参观。项羽雕像适合打卡。登台俯瞰老城视野极佳，能看到整个徐州的天际线。',map:'戏马台'},
+    {time:'13:30',title:'回龙窝 · 写明信片+街拍',desc:'徐州保存最完整的明清民居群——「猫的天空之城」各自写明信片寄给一年后的对方 📮，「老东门茶馆」喝杯本地茶，窄巷青砖墙拍街拍',detail:'必做：①猫空选明信片写好寄出（¥3+邮票¥1.2）②老东门茶馆本地茶¥15 ③窄巷青砖墙+木门+红灯笼拍照，穿浅色衣服最出片。',map:'回龙窝历史文化街区'},
+    {time:'14:30',title:'伴手礼采购',desc:'回龙窝街区内买：①徐州香包非遗手作¥20-50 ②烙馍礼盒真空装¥25 ③小孩酥糖¥15/袋。然后取行李',detail:'徐州香包选曹氏香包最正宗。烙馍礼盒真空装带回家热一下就能吃。小孩酥糖办公室分着吃。全部在回龙窝街区内搞定不用跑远。',map:null},
+    {time:'15:00',title:'饯行午餐 · 最后一顿地锅鸡',desc:'「徐州宴」或再刷「大张烙馍村」——再点地锅鸡！加地锅排骨，让后厨把汤汁收干拌饭绝了。把没吃够的徐州味全部补齐 🍗',detail:'徐州宴：泉山区建国西路。推荐：地锅鸡¥88+地锅排骨¥78+糖醋黄河鲤鱼¥68。记得让后厨把地锅鸡的汤汁收干一点！终极拌饭。',map:'徐州宴'},
+    {time:'16:00',title:'出发返程 ✈️',desc:'提前约车，徐州东站/观音机场。路上翻照片——云龙湖日落、楚王陵甬道、窑湾摇橹船、户部山灯笼。徐州不大，但你们已经把它走遍了 ❤️',detail:'徐州东站距市中心¥30/30分钟，观音机场¥80-100/50分钟。提前1.5小时到高铁站、2小时到机场。路上打开相册一起翻照片——四天很短，回忆很长。',map:'徐州东站'}
+  ]
+};
+
+function buildTimeline(day){
+  const container=document.getElementById('timeline-'+day);
+  if(!container)return;
+  const data=timelineData[day];
+  if(!data)return;
+  container.innerHTML=data.map(n=>`
+    <div class="tl-node" onclick="toggleTimelineNode(this)">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-time-label">${n.time}</div>
+        <h4>${n.title}</h4>
+        <p>${n.desc}</p>
+        <span class="tl-expand-hint">📌 点击展开详情</span>
+        <div class="tl-detail">${n.detail||''}</div>
+        ${n.map?`<a class="tl-map-link" href="https://uri.amap.com/search?keyword=${encodeURIComponent(n.map+' 徐州')}" target="_blank" rel="noopener">🗺️ 在高德地图中打开「${n.map}」</a>`:''}
+      </div>
+    </div>`).join('');
+}
+function toggleTimelineNode(el){el.classList.toggle('expanded')}
+['day1','day2','day3','day4'].forEach(buildTimeline);
+
+// ═══ SPOT DATA ═══
+const spotData={
+  yunlong:{
+    title:'云龙湖 & 云龙山',meta:'免费 · 泉山区 · 建议3-4小时',img:'bg-cloud-lake',emoji:'🌊⛰️',needBook:false,
+    slides:[{bg:'bg-cloud-lake',icon:'🌊',label:'云龙湖全景'},{bg:'bg-sunset',icon:'🌅',label:'云龙山日落'},{bg:'bg-cloud-lake',icon:'🚣',label:'湖心岛脚踏船'}],
+    desc:'云龙湖水面面积5.8平方公里，比杭州西湖还大。环湖一周约5公里，适合骑车或散步。湖中有湖心岛可坐脚踏船前往，湖畔有苏公塔、水上世界等景点。',
+    tip:'情侣推荐：下午4点后到湖心岛码头租脚踏船（¥40/30min），踩到湖中央等日落。6月下旬日落约19:20，云龙山观景台是拍摄湖面金色倒影的绝佳位置。'
+  },
+  chuwang:{
+    title:'狮子山楚王陵',meta:'¥60/人 · 云龙区 · 建议2小时',img:'bg-tomb',emoji:'🏛️🗿',needBook:false,
+    slides:[{bg:'bg-tomb',icon:'🏛️',label:'楚王陵入口'},{bg:'bg-tomb',icon:'🗿',label:'墓道深处'},{bg:'bg-museum',icon:'⚔️',label:'汉兵马俑'}],
+    desc:'西汉第三代楚王刘戊的陵墓，1995年中国十大考古发现之首。整座狮子山几乎被掏空建成地下宫殿，墓道深数十米。走在幽暗的斜坡墓道里，两侧石壁冰凉，能闻到两千年前的泥土气息。',
+    tip:'联票¥60/人含楚王陵+汉兵马俑博物馆+水下兵马俑馆，全部步行可达。中午时分人最少，墓道里只有你俩的脚步声——牵紧她的手，这就是穿越两千年的约会。'
+  },
+  guishan:{
+    title:'龟山汉墓',meta:'¥25/人 · 鼓楼区 · 建议1.5小时',img:'bg-tomb',emoji:'🪨⚰️',needBook:false,
+    slides:[{bg:'bg-tomb',icon:'🪨',label:'龟山汉墓入口'},{bg:'bg-tomb',icon:'↔️',label:'平行甬道'},{bg:'bg-museum',icon:'📜',label:'圣旨博物馆'}],
+    desc:'西汉楚襄王刘注与夫人的合葬墓。最震撼的是两条长达56米的平行甬道，两壁夹角精确到1/16000——两千年前没有激光测距仪的情况下如何做到至今是未解之谜。',
+    tip:'门票¥25/人，旁边圣旨博物馆+点石园石刻馆联票¥35/人。甬道内幽暗安静，牵手慢慢走——两千年前的工匠为这对夫妇建了永恒的家。预留2小时。'
+  },
+  yaowan:{
+    title:'窑湾古镇',meta:'免大门票 · 新沂市 · 建议4小时',img:'bg-oldtown',emoji:'🛶🏘️',needBook:false,
+    slides:[{bg:'bg-oldtown',icon:'🏘️',label:'古镇水巷'},{bg:'bg-oldtown',icon:'🛶',label:'摇橹船'},{bg:'bg-sunset',icon:'🏮',label:'古镇黄昏'}],
+    desc:'窑湾位于京杭大运河与骆马湖交汇处，明清时期是重要商埠，有"苏北小上海"之称。比周庄乌镇少80%游客，更加安静原生态。',
+    tip:'必做两件事：①坐摇橹船¥30/人，船娘唱苏北小调穿过石拱桥 ②临河馆子吃窑湾船菜。距市区约50km打车¥80-100，建议15:00前出发。'
+  },
+  huilong:{
+    title:'回龙窝 & 戏马台',meta:'免费 · 鼓楼区 · 建议2小时',img:'bg-oldtown',emoji:'🏮📸',needBook:false,
+    slides:[{bg:'bg-oldtown',icon:'🏮',label:'回龙窝夜景'},{bg:'bg-sunset',icon:'⚔️',label:'戏马台'},{bg:'bg-oldtown',icon:'📮',label:'猫空明信片'}],
+    desc:'回龙窝是徐州保存最完整的明清民居群，青砖黛瓦窄巷深院。入驻了独立咖啡馆、手作工坊和书店——「猫的天空之城」写明信片寄给未来的彼此。戏马台是项羽阅兵之地，可俯瞰老城。',
+    tip:'窄巷青砖墙+木门+红灯笼是天然拍照背景，穿浅色衣服最出片。两个景点步行10分钟可达。'
+  },
+  museum:{
+    title:'徐州博物馆',meta:'免费（公众号预约）· 泉山区 · 周一闭馆',img:'bg-museum',emoji:'🏺👑',needBook:true,
+    slides:[{bg:'bg-museum',icon:'🏺',label:'金缕玉衣'},{bg:'bg-museum',icon:'🖼️',label:'汉画像石'},{bg:'bg-garden',icon:'🏯',label:'乾隆行宫'}],
+    desc:'收藏了全国保存最完整的金缕玉衣之一、大量汉画像石和汉代玉器。馆内空调足，六月午后正好进来慢慢逛。',
+    tip:'⚠️ 周一闭馆！公众号「徐州博物馆」提前1-2天预约，凭身份证入场。6/23周一建议调整到Day3上午。'
+  },
+  pengzu:{
+    title:'彭祖园',meta:'免费 · 泉山区 · 建议1小时',img:'bg-garden',emoji:'🌳🦚',needBook:false,
+    slides:[{bg:'bg-garden',icon:'🌳',label:'梧桐林荫道'},{bg:'bg-garden',icon:'🗿',label:'彭祖雕像'},{bg:'bg-garden',icon:'🦚',label:'小动物园'}],
+    desc:'为纪念彭祖而建的免费公园，园内有参天古树、彭祖雕像、小动物园（孔雀和鹿），梧桐林荫道最适合两个人牵手慢慢走。',
+    tip:'位于龟山汉墓和市中心之间，游览完龟山汉墓后顺路过来。梧桐林荫道阳光透过树叶洒下来特别好看。'
+  },
+  hubushan:{
+    title:'户部山夜市',meta:'免费 · 鼓楼区 · 晚上逛',img:'bg-sunset',emoji:'🏮🌃',needBook:false,
+    slides:[{bg:'bg-sunset',icon:'🏮',label:'灯笼夜景'},{bg:'bg-oldtown',icon:'🍢',label:'夜市小吃'},{bg:'bg-sunset',icon:'🏘️',label:'古民居'}],
+    desc:'户部山历史文化街区，古民居依山而建，晚上灯笼亮起后氛围极佳。沿街全是小吃摊——烙馍卷馓子、蛙鱼、炸串、糖糕、米线……边走边吃边逛。',
+    tip:'从云龙山下来步行10分钟就到，把夜市安排在第一天晚上最合适。两个人牵着手在灯笼下逛吃，是徐州之行最接地气的浪漫。'
+  }
+};
+
+// ═══ CAROUSEL ═══
+function buildCarousel(slides){
+  return `
+    <div class="carousel" data-slides='${JSON.stringify(slides).replace(/'/g,"&#39;")}'>
+      <div class="car-slides">${slides.map((s,i)=>`<div class="car-slide ${s.bg}"><span style="font-size:3.5rem">${s.icon}</span><span style="font-size:.75rem;margin-top:8px;color:rgba(255,255,255,.7)">${s.label}</span></div>`).join('')}</div>
+      <div class="car-dots">${slides.map((_,i)=>`<div class="car-dot${i===0?' active':''}"></div>`).join('')}</div>
+      ${slides.length>1?`<button class="car-prev" onclick="event.stopPropagation();carouselMove(this.parentElement,-1)">◂</button><button class="car-next" onclick="event.stopPropagation();carouselMove(this.parentElement,1)">▸</button>`:''}
+    </div>`;
+}
+let carouselTimers={};
+function carouselMove(car,dir){
+  const slidesEl=car.querySelector('.car-slides');
+  const dots=car.querySelectorAll('.car-dot');
+  const slides=JSON.parse(car.dataset.slides);
+  let idx=parseInt(car.dataset.idx||'0');
+  idx=(idx+dir+slides.length)%slides.length;
+  car.dataset.idx=idx;
+  slidesEl.style.transform=`translateX(-${idx*100}%)`;
+  dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+  if(carouselTimers[car])clearInterval(carouselTimers[car]);
+  carouselTimers[car]=setInterval(()=>carouselMove(car,1),4000);
+}
+function openSpot(key){
+  const d=spotData[key];if(!d)return;
+  const m=document.getElementById('modal');
+  m.innerHTML=`
+    <button class="m-close" onclick="closeModal()">✕</button>
+    ${buildCarousel(d.slides||[{bg:d.img,icon:d.emoji,label:d.title}])}
+    <h2>${d.title}${d.needBook?' <span class="need-book">（需预约）</span>':''}</h2>
+    <div class="m-meta">${d.meta}</div>
+    <p>${d.desc}</p>
+    <div class="m-tip">💡 ${d.tip}</div>
+    <div class="m-info-row">
+      <div class="m-info-tag"><strong>🎫</strong> ${d.meta.includes('免费')?'免费参观':d.meta.match(/¥[\d]+/)?d.meta.match(/¥[\d]+/)[0]:'见详情'}</div>
+      ${d.needBook?'<div class="m-info-tag" style="border-color:var(--red)"><strong style="color:var(--red)">⚠️</strong> 需提前预约</div>':''}
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('show');
+  const car=m.querySelector('.carousel');
+  if(car&&JSON.parse(car.dataset.slides).length>1) carouselTimers[car]=setInterval(()=>carouselMove(car,1),4000);
+}
+
+// ═══ FOOD DATA ═══
+const foodData={
+  diguoji:{
+    name:'徐州地锅鸡',emoji:'🍗',img:'bg-diguoji',
+    slides:[{bg:'bg-diguoji',icon:'🍗',label:'铁锅炖鸡'},{bg:'bg-diguoji',icon:'🫓',label:'锅边贴饼'},{bg:'bg-diguoji',icon:'🔥',label:'咕嘟上桌'}],
+    desc:'徐州美食的灵魂。铁锅炖土鸡，锅边贴上面饼——面饼下半截浸在汤汁里吸收精华，上半截烤得焦脆。铁锅端上桌还在咕嘟冒泡，两个人一份刚好。',
+    biz:{hours:'11:00-14:00 / 17:00-21:00',price:'人均 ¥45',phone:'📞 大张烙馍村 0516-8571 7777',location:'泉山区湖北路与二环西路交叉口'}
+  },
+  bazirou:{
+    name:'把子肉',emoji:'🥩',img:'bg-bazirou',
+    slides:[{bg:'bg-bazirou',icon:'🥩',label:'五花把子肉'},{bg:'bg-bazirou',icon:'🍚',label:'肉汁拌饭'},{bg:'bg-bazirou',icon:'🥢',label:'一夹就断'}],
+    desc:'选五花三层的好肉，用酱油和冰糖慢炖到筷子轻轻一夹就断开。肥而不腻、瘦而不柴，配一碗白米饭浇上肉汁——简单但惊艳。',
+    biz:{hours:'10:30-20:00',price:'人均 ¥25',phone:'📞 周记把子肉 0516-8372 3126',location:'鼓楼区富国街'}
+  },
+  latang:{
+    name:'徐州辣汤',emoji:'🍜',img:'bg-latang',
+    slides:[{bg:'bg-latang',icon:'🍜',label:'浓稠辣汤'},{bg:'bg-latang',icon:'🥟',label:'煎包锅贴'},{bg:'bg-latang',icon:'☀️',label:'清晨灵魂'}],
+    desc:'不是清汤寡水而是浓稠的糊汤，胡椒味直冲天灵盖，一碗下去整个人都醒了。徐州人的清晨是从一碗辣汤配煎包锅贴开始的。',
+    biz:{hours:'06:00-10:30 / 全天部分店有',price:'人均 ¥10-15',phone:'📞 两来风 0516-8373 2368',location:'两来风：鼓楼区解放北路；马市街饣它汤：鼓楼区马市街'}
+  },
+  luomo:{
+    name:'烙馍',emoji:'🫓',img:'bg-luomo',
+    slides:[{bg:'bg-luomo',icon:'🫓',label:'现擀现烙'},{bg:'bg-luomo',icon:'🥬',label:'卷菜卷肉'},{bg:'bg-luomo',icon:'👵',label:'街边小摊'}],
+    desc:'徐州最朴实的美食——薄如纸、韧如筋，刚烙出来趁热卷上土豆丝、海带丝、卤蛋和辣椒，¥5一个管饱。街边随便哪个摊子现擀现烙的都好吃。',
+    biz:{hours:'早市 06:00-10:00，全天街边有摊',price:'人均 ¥5-8',phone:'📞 无需预定，街边随处可见',location:'酒店楼下、菜市场门口、学校周边——到处都有烙馍摊'}
+  },
+  shaokao:{
+    name:'徐州烧烤',emoji:'🍖',img:'bg-shaokao',
+    slides:[{bg:'bg-shaokao',icon:'🍖',label:'羊肉串'},{bg:'bg-shaokao',icon:'🫓',label:'烙馍卷肉'},{bg:'bg-shaokao',icon:'🔥',label:'炭火现烤'}],
+    desc:'徐州人对烧烤的热爱不输东北。灵魂吃法：把烤好的羊肉串从签子上撸下来卷进烙馍里，一口下去肉汁和面香同时炸开。必点羊肉串、烤羊排、烤腰子、烤饼。',
+    biz:{hours:'17:00-凌晨02:00',price:'人均 ¥60-80',phone:'📞 大西北烧烤 0516-8376 6099',location:'大西北烧烤：民主南路；老郑烧烤：鼓楼区彭城路'}
+  },
+  yangfang:{
+    name:'羊方藏鱼',emoji:'🐟',img:'bg-yangfang',
+    slides:[{bg:'bg-yangfang',icon:'🐟',label:'鱼羊同炖'},{bg:'bg-yangfang',icon:'🍲',label:'汤白如奶'},{bg:'bg-yangfang',icon:'👑',label:'彭祖名菜'}],
+    desc:'四千年前彭祖发明的名菜——把鱼肉藏在羊肉里一起炖，汤白如奶、鲜到极致。传说汉字"鲜"就是鱼和羊的组合，这道菜就是"鲜"字的活化石。',
+    biz:{hours:'11:00-13:30 / 17:00-20:30（需提前40分钟下单）',price:'人均 ¥85-100',phone:'📞 徐州饭店 0516-8560 8888',location:'徐州饭店：淮海西路（老字号，建议提前订位）'}
+  }
+};
+function openFood(key){
+  const d=foodData[key];if(!d)return;
+  const m=document.getElementById('modal');
+  m.innerHTML=`
+    <button class="m-close" onclick="closeModal()">✕</button>
+    ${buildCarousel(d.slides||[{bg:d.img,icon:d.emoji,label:d.name}])}
+    <h2>${d.emoji} ${d.name}</h2>
+    <p style="margin-top:16px">${d.desc}</p>
+    ${d.biz?`
+    <div class="m-info-row">
+      <div class="m-info-tag"><strong>🕐</strong> ${d.biz.hours}</div>
+      <div class="m-info-tag"><strong>💰</strong> ${d.biz.price}</div>
+      <div class="m-info-tag"><strong>📞</strong> ${d.biz.phone}</div>
+    </div>
+    <div class="m-info-tag" style="width:100%;margin-top:4px"><strong>📍</strong> ${d.biz.location}</div>`:''}`;
+  document.getElementById('modal-overlay').classList.add('show');
+  const car=m.querySelector('.carousel');
+  if(car&&JSON.parse(car.dataset.slides).length>1) carouselTimers[car]=setInterval(()=>carouselMove(car,1),4000);
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('show');
+  Object.values(carouselTimers).forEach(clearInterval);
+  carouselTimers={};
+}
+
+// ═══ CHECKLIST ═══
+function toggleCheck(el){el.classList.toggle('done');el.querySelector('.cl-check').textContent=el.classList.contains('done')?'✓':'';saveChecks()}
+function saveChecks(){
+  const state={};
+  document.querySelectorAll('.cl-item').forEach((el,i)=>{state[i]=el.classList.contains('done')});
+  localStorage.setItem('xuzhou-checklist-late',JSON.stringify(state));
+}
+(function loadChecks(){
+  try{const state=JSON.parse(localStorage.getItem('xuzhou-checklist-late')||'{}');
+  document.querySelectorAll('.cl-item').forEach((el,i)=>{if(state[i]){el.classList.add('done');el.querySelector('.cl-check').textContent='✓'}})}catch(e){}
+})();
+
+// ═══ INSTALL ═══
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;
+  const banner=document.getElementById('install-banner');banner.classList.add('show');
+  banner.onclick=()=>{deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{banner.remove()})};
+});
+
+// ═══ SW ═══
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
