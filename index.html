@@ -256,8 +256,8 @@
   .food-item{background:var(--card);border-radius:16px;padding:18px 14px;text-align:center;border:1px solid var(--border);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}
   .food-item:active{transform:scale(.95)}
   .food-item:hover{box-shadow:0 6px 24px rgba(0,0,0,.2)}
-  .food-item .fi-emoji{font-size:2.2rem;margin-bottom:8px;display:inline-block;transition:transform .3s ease}
-  .food-item:active .fi-emoji{transform:scale(1.3) rotate(-8deg);animation:emojiBounce .5s ease}
+  .food-item .fi-emoji{font-size:2.2rem;margin-bottom:8px;display:inline-block;transition:transform .3s ease}.food-item .fi-emoji img{border-radius:50%;display:block;margin:0 auto}
+  .food-item:active .fi-emoji{transform:scale(1.2)}
   @keyframes emojiBounce{0%,100%{transform:scale(1)}30%{transform:scale(1.4) rotate(-10deg)}60%{transform:scale(.9) rotate(4deg)}}
   .food-item h4{font-size:.9rem;color:var(--text);margin-bottom:4px}
   .food-item p{font-size:.72rem;color:var(--dim);line-height:1.4}
@@ -436,10 +436,10 @@
 
   <div class="section-hd"><span class="sh-icon">🍽️</span><span class="sh-title">必吃美食</span><span class="sh-line"></span></div>
   <div class="food-row">
-    <div class="food-item" onclick="openFood('diguoji')"><div class="fi-emoji">🍗</div><h4>地锅鸡</h4><p>大张烙馍村<br>人均 ¥45</p></div>
-    <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji">🥩</div><h4>把子肉</h4><p>周记把子肉<br>人均 ¥25</p></div>
-    <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji">🍜</div><h4>徐州辣汤</h4><p>两来风<br>人均 ¥10</p></div>
-    <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji">🍖</div><h4>徐州烧烤</h4><p>大西北烧烤<br>人均 ¥60</p></div>
+    <div class="food-item" onclick="openFood('diguoji')"><div class="fi-emoji"><img src="food1.gif" alt="地锅鸡" width="56" height="56"></div><h4>地锅鸡</h4><p>大张烙馍村<br>人均 ¥45</p></div>
+    <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji"><img src="food2.gif" alt="把子肉" width="56" height="56"></div><h4>把子肉</h4><p>周记把子肉<br>人均 ¥25</p></div>
+    <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji"><img src="food3.gif" alt="辣汤" width="56" height="56"></div><h4>徐州辣汤</h4><p>两来风<br>人均 ¥10</p></div>
+    <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji"><img src="food4.gif" alt="烧烤" width="56" height="56"></div><h4>徐州烧烤</h4><p>大西北烧烤<br>人均 ¥60</p></div>
   </div>
 
 </div>
@@ -502,11 +502,11 @@
 <div class="page" id="page-food">
   <div class="section-hd"><span class="sh-icon">🍽️</span><span class="sh-title">徐州必吃</span><span class="sh-line"></span></div>
   <div class="food-row">
-    <div class="food-item" onclick="openFood('diguoji')"><div class="fi-emoji">🍗</div><h4>地锅鸡</h4><p>大张烙馍村<br>彭城一号<br>人均 ¥45</p></div>
-    <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji">🥩</div><h4>把子肉</h4><p>周记把子肉<br>怪味愚<br>人均 ¥25</p></div>
-    <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji">🍜</div><h4>徐州辣汤</h4><p>两来风<br>马市街饣它汤<br>人均 ¥10</p></div>
+    <div class="food-item" onclick="openFood('diguoji')"><div class="fi-emoji"><img src="food1.gif" alt="地锅鸡" width="56" height="56"></div><h4>地锅鸡</h4><p>大张烙馍村<br>彭城一号<br>人均 ¥45</p></div>
+    <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji"><img src="food2.gif" alt="把子肉" width="56" height="56"></div><h4>把子肉</h4><p>周记把子肉<br>怪味愚<br>人均 ¥25</p></div>
+    <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji"><img src="food3.gif" alt="辣汤" width="56" height="56"></div><h4>徐州辣汤</h4><p>两来风<br>马市街饣它汤<br>人均 ¥10</p></div>
     <div class="food-item" onclick="openFood('luomo')"><div class="fi-emoji">🫓</div><h4>烙馍</h4><p>街边任意摊<br>卷菜卷肉卷一切<br>人均 ¥5</p></div>
-    <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji">🍖</div><h4>徐州烧烤</h4><p>大西北烧烤<br>老郑烧烤<br>人均 ¥60</p></div>
+    <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji"><img src="food4.gif" alt="烧烤" width="56" height="56"></div><h4>徐州烧烤</h4><p>大西北烧烤<br>老郑烧烤<br>人均 ¥60</p></div>
     <div class="food-item" onclick="openFood('yangfang')"><div class="fi-emoji">🐟</div><h4>羊方藏鱼</h4><p>徐州饭店<br>四千年名菜<br>人均 ¥85</p></div>
   </div>
   <div class="section-hd"><span class="sh-icon">🏨</span><span class="sh-title">住宿推荐</span><span class="sh-line"></span></div>
