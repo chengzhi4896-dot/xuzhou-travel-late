@@ -100,6 +100,52 @@
   body.light #theme-toggle{border-color:rgba(0,0,0,.15)}
   #theme-toggle:active{transform:scale(.9)}
 
+  /* ═══ 噜噜 CAPYBARA ═══ */
+  #lulu{
+    position:fixed;bottom:86px;right:12px;z-index:160;cursor:pointer;
+    width:80px;height:80px;pointer-events:auto;
+    animation:luluFloat 4s ease-in-out infinite,luluWiggle 7s ease-in-out infinite;
+    filter:drop-shadow(0 4px 16px rgba(0,0,0,.3));
+    transition:transform .3s;
+  }
+  #lulu:active{transform:scale(1.15)}
+  @keyframes luluFloat{
+    0%,100%{transform:translateY(0) rotate(0deg)}
+    25%{transform:translateY(-10px) rotate(-2deg)}
+    75%{transform:translateY(-4px) rotate(2deg)}
+  }
+  @keyframes luluWiggle{
+    0%,100%{transform:translateX(0)}
+    2%{transform:translateX(-3px)}
+    4%{transform:translateX(3px)}
+    6%{transform:translateX(0)}
+  }
+  #lulu .lulu-bubble{
+    position:absolute;top:-28px;left:50%;transform:translateX(-50%);
+    background:rgba(245,240,232,.95);color:#3a2010;font-size:.6rem;
+    padding:4px 10px;border-radius:12px;white-space:nowrap;opacity:0;
+    pointer-events:none;transition:opacity .3s;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+  }
+  #lulu .lulu-bubble::after{
+    content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+    width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
+    border-top:8px solid rgba(245,240,232,.95);
+  }
+  #lulu:hover .lulu-bubble,.lulu-talk .lulu-bubble{opacity:1}
+  #lulu .lulu-heart{
+    position:absolute;top:-8px;right:-4px;font-size:1rem;
+    animation:luluHeartPop 1.8s ease-in-out infinite;opacity:0;
+  }
+  @keyframes luluHeartPop{
+    0%,85%{opacity:0;transform:translateY(0) scale(.5)}
+    88%{opacity:1;transform:translateY(-18px) scale(1.2)}
+    100%{opacity:0;transform:translateY(-32px) scale(.8)}
+  }
+  body.light #lulu{filter:drop-shadow(0 4px 14px rgba(0,0,0,.12))}
+  body.light #lulu .lulu-bubble{background:rgba(30,30,40,.92);color:#e8e0d5;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+  body.light #lulu .lulu-bubble::after{border-top-color:rgba(30,30,40,.92)}
+
   .page{display:none;padding:0 16px;animation:fadeIn .35s ease}
   .page.active{display:block}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -394,6 +440,46 @@
     <div class="food-item" onclick="openFood('bazirou')"><div class="fi-emoji">🥩</div><h4>把子肉</h4><p>周记把子肉<br>人均 ¥25</p></div>
     <div class="food-item" onclick="openFood('latang')"><div class="fi-emoji">🍜</div><h4>徐州辣汤</h4><p>两来风<br>人均 ¥10</p></div>
     <div class="food-item" onclick="openFood('shaokao')"><div class="fi-emoji">🍖</div><h4>徐州烧烤</h4><p>大西北烧烤<br>人均 ¥60</p></div>
+  </div>
+
+  <!-- 噜噜卡皮巴拉 -->
+  <div style="text-align:center;padding:16px 0 8px;position:relative">
+    <svg viewBox="0 0 200 140" width="180" height="126" xmlns="http://www.w3.org/2000/svg" style="animation:luluFloat 4s ease-in-out infinite;filter:drop-shadow(0 4px 14px rgba(0,0,0,.25))">
+      <ellipse cx="100" cy="90" rx="72" ry="42" fill="#8B7355"/>
+      <ellipse cx="100" cy="88" rx="64" ry="36" fill="#A0896C"/>
+      <ellipse cx="100" cy="92" rx="40" ry="22" fill="#C4B5A0"/>
+      <ellipse cx="100" cy="52" rx="38" ry="32" fill="#A0896C"/>
+      <ellipse cx="100" cy="54" rx="32" ry="27" fill="#B8A88A"/>
+      <ellipse cx="72" cy="30" rx="10" ry="8" fill="#7A6548"/>
+      <ellipse cx="128" cy="30" rx="10" ry="8" fill="#7A6548"/>
+      <ellipse cx="72" cy="31" rx="6" ry="5" fill="#B89878"/>
+      <ellipse cx="128" cy="31" rx="6" ry="5" fill="#B89878"/>
+      <ellipse cx="88" cy="50" rx="5" ry="5.5" fill="#2A1A0A" class="eye-blink"/>
+      <ellipse cx="112" cy="50" rx="5" ry="5.5" fill="#2A1A0A" class="eye-blink"/>
+      <circle cx="89" cy="48.5" r="1.5" fill="#fff"/>
+      <circle cx="113" cy="48.5" r="1.5" fill="#fff"/>
+      <ellipse cx="100" cy="57" rx="7" ry="5" fill="#5A4030"/>
+      <ellipse cx="98" cy="56" rx="2.5" ry="1.8" fill="#7A6050"/>
+      <ellipse cx="102" cy="56" rx="2.5" ry="1.8" fill="#7A6050"/>
+      <path d="M95 61 Q100 66 105 61" fill="none" stroke="#5A4030" stroke-width="1.5" stroke-linecap="round"/>
+      <ellipse cx="80" cy="58" rx="6" ry="4" fill="rgba(220,140,140,.4)"/>
+      <ellipse cx="120" cy="58" rx="6" ry="4" fill="rgba(220,140,140,.4)"/>
+      <rect x="62" y="88" width="18" height="28" rx="9" fill="#8B7355"/>
+      <rect x="120" y="88" width="18" height="28" rx="9" fill="#8B7355"/>
+      <rect x="72" y="112" width="20" height="14" rx="7" fill="#7A6548"/>
+      <rect x="108" y="112" width="20" height="14" rx="7" fill="#7A6548"/>
+      <circle cx="168" cy="80" r="6" fill="#8B7355"/>
+      <circle cx="170" cy="79" r="3" fill="#A0896C"/>
+      <ellipse cx="102" cy="27" rx="8" ry="3" fill="#E8864A"/>
+      <rect x="94" y="15" width="16" height="12" rx="6" fill="#E8864A"/>
+      <circle cx="102" cy="13" r="5" fill="#E8864A"/>
+    </svg>
+    <div style="font-size:.7rem;color:var(--dim);margin-top:6px">咔皮巴拉在睡觉 💤</div>
+    <style>
+    .eye-blink{animation:luluBlink 4s ease-in-out infinite;transform-origin:center}
+    @keyframes luluBlink{0%,44%,46%,100%{transform:scaleY(1)}45%{transform:scaleY(.08)}}
+    @keyframes luluFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    </style>
   </div>
 </div>
 
