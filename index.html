@@ -26,15 +26,50 @@
     --bg:#f5f0e8;--surface:#fff;--card:#fff;
     --text:#2a2018;--muted:#777;--dim:#aaa;
     --border:rgba(0,0,0,.06);
+    /* 亮色模式下用浅色远山 */
+    background:
+      radial-gradient(ellipse 300% 120% at 20% 85%, rgba(180,195,210,.25) 0%, transparent 60%),
+      radial-gradient(ellipse 220% 100% at 85% 92%, rgba(175,190,205,.22) 0%, transparent 55%),
+      radial-gradient(ellipse 200% 90% at 50% 88%, rgba(160,175,190,.28) 0%, transparent 50%),
+      radial-gradient(ellipse 250% 80% at 5% 95%, rgba(185,200,215,.22) 0%, transparent 55%),
+      radial-gradient(ellipse 250% 80% at 95% 95%, rgba(180,195,210,.22) 0%, transparent 55%),
+      radial-gradient(ellipse 180% 70% at 30% 90%, rgba(150,165,180,.35) 0%, transparent 45%),
+      radial-gradient(ellipse 160% 65% at 70% 90%, rgba(145,160,175,.3) 0%, transparent 42%),
+      radial-gradient(ellipse 400% 30% at 50% 75%, rgba(160,200,220,.15) 0%, transparent 50%),
+      radial-gradient(ellipse 100% 40% at 50% 25%, rgba(220,180,120,.08) 0%, transparent 50%),
+      var(--bg);
+    background-attachment:fixed;
+    background-size:100% 100%;
   }
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   html{font-size:16px;scroll-behavior:smooth}
   body{
     font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC','WenQuanYi Micro Hei',sans-serif;
-    background:var(--bg);color:var(--text);min-height:100vh;
+    color:var(--text);min-height:100vh;position:relative;
     -webkit-tap-highlight-color:transparent;
     padding-bottom:calc(var(--nav-h) + var(--safe-b) + 8px);
     overflow-x:hidden;transition:background .4s,color .4s;
+    /* 远山叠嶂 + 云龙湖水墨意境 */
+    background:
+      /* 最远淡山 */
+      radial-gradient(ellipse 300% 120% at 20% 85%, rgba(45,60,80,.55) 0%, transparent 60%),
+      radial-gradient(ellipse 220% 100% at 85% 92%, rgba(40,55,75,.50) 0%, transparent 55%),
+      /* 中层远山 */
+      radial-gradient(ellipse 200% 90% at 50% 88%, rgba(35,50,65,.6) 0%, transparent 50%),
+      radial-gradient(ellipse 250% 80% at 5% 95%, rgba(50,70,85,.45) 0%, transparent 55%),
+      radial-gradient(ellipse 250% 80% at 95% 95%, rgba(48,65,80,.45) 0%, transparent 55%),
+      /* 近山轮廓 */
+      radial-gradient(ellipse 180% 70% at 30% 90%, rgba(30,45,58,.7) 0%, transparent 45%),
+      radial-gradient(ellipse 160% 65% at 70% 90%, rgba(28,42,55,.65) 0%, transparent 42%),
+      /* 云龙湖水面光 */
+      radial-gradient(ellipse 400% 30% at 50% 75%, rgba(90,140,170,.2) 0%, transparent 50%),
+      radial-gradient(ellipse 300% 20% at 50% 70%, rgba(130,170,200,.12) 0%, transparent 45%),
+      /* 山顶暮光 */
+      radial-gradient(ellipse 100% 40% at 50% 25%, rgba(200,150,80,.1) 0%, transparent 50%),
+      /* 基底深色 */
+      var(--bg);
+    background-attachment:fixed;
+    background-size:100% 100%;
   }
   body.splash-shown{overflow:hidden}
 
@@ -312,7 +347,7 @@
     <div class="spot-card-h" onclick="openSpot('yunlong')"><div class="sch-img bg-cloud-lake">🌊⛰️</div><div class="sch-info"><h3>云龙湖 & 云龙山</h3><div class="sch-meta">免费 · 泉山区 · 3-4h</div><p>徐州版"西湖"，环湖漫步+登山观日落</p></div></div>
     <div class="spot-card-h" onclick="openSpot('chuwang')"><div class="sch-img bg-tomb">🏛️🗿</div><div class="sch-info"><h3>狮子山楚王陵</h3><div class="sch-meta">¥60/人 · 云龙区 · 2h</div><p>"东方金字塔"——西汉楚王地下宫殿</p></div></div>
     <div class="spot-card-h" onclick="openSpot('guishan')"><div class="sch-img bg-tomb">🪨⚰️</div><div class="sch-info"><h3>龟山汉墓</h3><div class="sch-meta">¥25/人 · 鼓楼区 · 1.5h</div><p>夫妇合葬墓，平行甬道精度千古之谜</p></div></div>
-    <div class="spot-card-h" onclick="openSpot('yaowan')"><div class="sch-img bg-oldtown">🛶🏘️</div><div class="sch-info"><h3>窑湾古镇</h3><div class="sch-meta">免大门票 · 新沂 · 4h</div><p>摇橹船+运河古镇，苏北小江南</p></div></div>
+    <div class="spot-card-h" onclick="openSpot('huilong')"><div class="sch-img bg-oldtown">🏮📸</div><div class="sch-info"><h3>回龙窝 & 戏马台</h3><div class="sch-meta">免费 · 鼓楼区 · 2h</div><p>明清民居+咖啡馆+手作+霸王遗风</p></div></div>
     <div class="spot-card-h" onclick="openSpot('museum')"><div class="sch-img bg-museum">🏺👑</div><div class="sch-info"><h3>徐州博物馆 <span class="need-book">（需预约）</span></h3><div class="sch-meta">免费 · 泉山区 · 2h</div><p>金缕玉衣+汉画像石，公众号预约</p></div></div>
     <div class="spot-card-h" onclick="openSpot('huilong')"><div class="sch-img bg-oldtown">🏮📸</div><div class="sch-info"><h3>回龙窝 & 戏马台</h3><div class="sch-meta">免费 · 鼓楼区 · 2h</div><p>明清民居+咖啡馆+手作+霸王遗风</p></div></div>
   </div>
@@ -348,11 +383,11 @@
 
 <!-- ═══ DAY 3 ═══ -->
 <div class="page" id="page-day3">
-  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 3</h1><div class="h-sub">6月24日 周二 · 古韵悠然</div><div class="h-dates">🪨 龟山汉墓 → 彭祖园 → 窑湾古镇 → 摇橹船</div></div>
+  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 3</h1><div class="h-sub">6月24日 周二 · 古韵悠然</div><div class="h-dates">🪨 龟山汉墓 → 彭祖园 → 博物馆 → 影院之夜 🎬</div></div>
   <div class="section-hd"><span class="sh-icon">⏱️</span><span class="sh-title">行程时间线</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">点击展开详情</span></div>
   <div class="timeline" id="timeline-day3"></div>
   <div style="background:linear-gradient(135deg,rgba(181,52,58,.15),rgba(201,169,110,.08));border:1px solid rgba(201,169,110,.2);border-radius:16px;padding:18px 20px;margin:12px 0;color:#e8c8a0;font-size:.82rem;line-height:1.6">
-    <strong>❤️ 今日最佳：</strong>窑湾摇橹船穿过石拱桥的瞬间——船娘小调停了，只剩木桨划水声。她靠过来看桥洞青苔，你看着她被夕阳映红的侧脸。这就是旅行的意义。
+    <strong>❤️ 今日最佳：</strong>电影院黑暗里牵着手，大银幕的光映在两张脸上。不用赶景点不用看时间，整个世界的节奏都慢了下来。爆米花桶里她碰到你的手——这是旅行中最舒服的浪漫。
   </div>
 </div>
 
@@ -374,7 +409,6 @@
     <div onclick="openSpot('chuwang')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-tomb">🏛️🗿</div><div class="sch-info"><h3>狮子山楚王陵</h3><div class="sch-meta">¥60/人 · 云龙区 · 2h</div><p>西汉楚王陵+汉兵马俑+水下兵马俑馆联票</p></div></div>
     <div onclick="openSpot('guishan')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-tomb">🪨⚰️</div><div class="sch-info"><h3>龟山汉墓</h3><div class="sch-meta">¥25/人 · 鼓楼区 · 1.5h</div><p>楚襄王夫妇合葬墓，平行甬道精度至今成谜</p></div></div>
     <div onclick="openSpot('museum')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-museum">🏺👑</div><div class="sch-info"><h3>徐州博物馆 <span class="need-book">（需预约）</span></h3><div class="sch-meta">免费（公众号预约）· 泉山区 · 周一闭馆</div><p>金缕玉衣+汉画像石+汉代玉器</p></div></div>
-    <div onclick="openSpot('yaowan')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-oldtown">🛶🏘️</div><div class="sch-info"><h3>窑湾古镇</h3><div class="sch-meta">免大门票 · 新沂市 · 4h</div><p>明清运河商埠，摇橹船¥30/人，距市区约50km</p></div></div>
     <div onclick="openSpot('pengzu')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-garden">🌳🦚</div><div class="sch-info"><h3>彭祖园</h3><div class="sch-meta">免费 · 泉山区 · 1h</div><p>古树遮天+彭祖雕像+小动物园，梧桐林荫道适合散步</p></div></div>
     <div onclick="openSpot('huilong')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-oldtown">🏮📸</div><div class="sch-info"><h3>回龙窝 & 戏马台</h3><div class="sch-meta">免费 · 鼓楼区 · 2h</div><p>明清民居+咖啡馆+手作工坊+项羽阅兵台</p></div></div>
     <div onclick="openSpot('hubushan')" style="background:var(--card);border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid var(--border)"><div class="sch-img bg-sunset">🏮🌃</div><div class="sch-info"><h3>户部山夜市</h3><div class="sch-meta">免费 · 鼓楼区 · 晚上逛</div><p>古民居街区+夜市小吃，烙馍卷馓子+蛙鱼+炸串</p></div></div>
@@ -408,7 +442,7 @@
     <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🌅 云龙山观景台看日落</div>
     <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🚣 云龙湖脚踏船荡漾湖心</div>
     <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🏛️ 楚王陵牵手穿越千年</div>
-    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🛶 窑湾古镇摇橹船</div>
+    <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🎬 两个人看一场电影</div>
     <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🍗 两人分一份地锅鸡</div>
     <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>📸 回龙窝青石板街拍</div>
     <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"></div>🌃 户部山夜市牵手逛吃</div>
@@ -504,10 +538,10 @@ const timelineData = {
     {time:'11:00',title:'酒店出发 · 街边早午餐',desc:'再来一碗辣汤+煎包锅贴，把徐州清晨的味道刻进记忆。如果昨天博物馆没去成，今天第一站补上',detail:'两来风解放路店离酒店不远。辣汤¥5+煎包¥2×4+锅贴¥2×2=人均¥13。吃完精神满满出发。',map:'两来风解放路店'},
     {time:'12:30',title:'龟山汉墓 · 鬼斧神工',desc:'西汉楚襄王刘注夫妇合葬墓——两条平行甬道长56米，夹角精度1/16000，两千年前没激光怎么做到的至今是谜。走在甬道里两侧石壁完全对称，像穿过时空隧道',detail:'门票¥25/人，旁边圣旨博物馆+点石园石刻馆联票¥35/人。甬道内幽暗安静，牵手慢慢走——两千年前的工匠为这对夫妇建了永恒的家。',map:'龟山汉墓'},
     {time:'14:00',title:'彭祖园 · 梧桐林荫',desc:'免费公园但比想象中大——古树遮天+彭祖雕像+小动物园（孔雀🦚）。两个人牵手在梧桐林荫道慢慢走，累了坐长椅看大爷下棋',detail:'泉山区，从龟山汉墓打车¥12/15分钟。园内彭祖雕像高38米，梧桐林荫道是拍照圣地——阳光透过树叶洒下来特别好看。',map:'彭祖园'},
-    {time:'15:30',title:'窑湾古镇出发',desc:'打车约45分钟到新沂窑湾。明清运河商埠，青石板路老票号当铺教堂——比江南古镇少80%游客更安静，窄巷屋檐几乎碰到一起',detail:'距市区约50km，打车单程¥80-100（45分钟），或租车一天约¥150。古镇免大门票，小景点联票¥40/人可选。建议15:00前出发保证有充足时间逛。',map:'窑湾古镇'},
-    {time:'17:00',title:'摇橹船 · 运河小调 🛶',desc:'码头坐摇橹船¥30/人，船娘摇橹唱苏北小调，老房子倒映运河水里，摇摇晃晃穿过石拱桥——最"江南"的半小时',detail:'码头在古镇中段，¥30/人。人少可跟船娘商量两人包船¥60。黄昏时段（17:00-18:00）光线最美，水巷里的光影绝了，记得录视频。',map:'窑湾古镇码头'},
-    {time:'18:30',title:'窑湾船菜 · 运河晚宴',desc:'临河馆子「窑湾船菜馆」或「运河人家」——运河鲜鱼、古镇酱蹄、桂花糖藕、银鱼跑蛋，看灯笼一盏一盏亮起来 🏮',detail:'推荐：运河鲜鱼¥58+古镇酱蹄¥38+桂花糖藕¥22+银鱼跑蛋¥28=人均¥70。靠河位置先到先得，建议18:00前到。灯笼亮起时整条水巷都在发光。',map:'窑湾船菜馆'},
-    {time:'20:30',title:'返回市区',desc:'打车回酒店约40分钟。如果还有精力，人民路散个步消消食',detail:'窑湾回市区约50km，打车¥80-100。提前用高德/滴滴约车，晚上古镇附近车少。Day3是最满的一天，回酒店泡个热水澡放松。',map:null}
+    {time:'16:00',title:'徐州博物馆 <span class="need-book">（需预约）</span>',desc:'如果昨天因为周一闭馆没去成，今天补上。镇馆之宝金缕玉衣+汉画像石+汉代玉器，馆内空调足慢慢逛。出来后顺便逛乾隆行宫遗址',detail:'公众号「徐州博物馆」提前1-2天预约，凭身份证入馆。周二正常开放，下午人少。博物馆后面乾隆行宫免费参观，小园林10分钟逛完。',map:'徐州博物馆'},
+    {time:'18:30',title:'晚餐 · 再来一顿徐州味',desc:'「徐州饭店」淮海西路老字号——羊方藏鱼（四千年彭祖名菜），鱼肉藏在羊肉里炖汤白肉嫩。或者回刷大张烙馍村再吃一顿地锅鸡',detail:'徐州饭店：淮海西路。推荐：羊方藏鱼¥128+糖醋黄河鲤鱼¥68。羊方藏鱼需提前40分钟制作到店先下单。或者大张烙馍村再刷地锅鸡¥88——闭眼选都好吃。',map:'徐州饭店'},
+    {time:'20:00',title:'🎬 影院之夜 · 两个人的电影',desc:'找一家电影院看一场电影——逛了两天古迹，今晚放松一下。牵着她的手坐在黑暗里，大银幕的光映在两张脸上，这是旅行中最好的休息方式 🍿',detail:'推荐影院：①万达影城（云龙万达广场）②CGV影城（苏宁广场）③中影国际影城（彭城壹号）。选一部两人都想看的，买一桶爆米花两杯可乐。电影结束牵着手走回酒店，聊刚才的剧情——比逛古镇舒服多了。',map:'万达影城徐州云龙店'},
+    {time:'22:30',title:'回酒店 · 收拾行李准备明天返程',desc:'电影散场慢慢散步回酒店，最后收拾一下行李。睡前窝在一起聊聊这几天最开心的瞬间 💤',detail:'Day3结束——明天是返程日，今晚稍微整理一下行李，伴手礼和脏衣服分开放。Day4还有戏马台+回龙窝+饯行午饭，不用太早睡。',map:null}
   ],
   day4: [
     {time:'11:00',title:'酒店退房 · 寄存行李',desc:'睡到自然醒收拾行李，跟前台沟通延迟退房或寄存行李。最后一天轻装上阵',detail:'大部分酒店可延迟到13:00退房或免费寄存行李。确认退房时间，把行李寄存在前台就可以轻松出门。',map:null},
@@ -516,7 +550,7 @@ const timelineData = {
     {time:'13:30',title:'回龙窝 · 写明信片+街拍',desc:'徐州保存最完整的明清民居群——「猫的天空之城」各自写明信片寄给一年后的对方 📮，「老东门茶馆」喝杯本地茶，窄巷青砖墙拍街拍',detail:'必做：①猫空选明信片写好寄出（¥3+邮票¥1.2）②老东门茶馆本地茶¥15 ③窄巷青砖墙+木门+红灯笼拍照，穿浅色衣服最出片。',map:'回龙窝历史文化街区'},
     {time:'14:30',title:'伴手礼采购',desc:'回龙窝街区内买：①徐州香包非遗手作¥20-50 ②烙馍礼盒真空装¥25 ③小孩酥糖¥15/袋。然后取行李',detail:'徐州香包选曹氏香包最正宗。烙馍礼盒真空装带回家热一下就能吃。小孩酥糖办公室分着吃。全部在回龙窝街区内搞定不用跑远。',map:null},
     {time:'15:00',title:'饯行午餐 · 最后一顿地锅鸡',desc:'「徐州宴」或再刷「大张烙馍村」——再点地锅鸡！加地锅排骨，让后厨把汤汁收干拌饭绝了。把没吃够的徐州味全部补齐 🍗',detail:'徐州宴：泉山区建国西路。推荐：地锅鸡¥88+地锅排骨¥78+糖醋黄河鲤鱼¥68。记得让后厨把地锅鸡的汤汁收干一点！终极拌饭。',map:'徐州宴'},
-    {time:'16:00',title:'出发返程 ✈️',desc:'提前约车，徐州东站/观音机场。路上翻照片——云龙湖日落、楚王陵甬道、窑湾摇橹船、户部山灯笼。徐州不大，但你们已经把它走遍了 ❤️',detail:'徐州东站距市中心¥30/30分钟，观音机场¥80-100/50分钟。提前1.5小时到高铁站、2小时到机场。路上打开相册一起翻照片——四天很短，回忆很长。',map:'徐州东站'}
+    {time:'16:00',title:'出发返程 ✈️',desc:'提前约车，徐州东站/观音机场。路上翻照片——云龙湖日落、楚王陵甬道、回龙窝街拍、影院爆米花。徐州不大，但你们已经把它走遍了 ❤️',detail:'徐州东站距市中心¥30/30分钟，观音机场¥80-100/50分钟。提前1.5小时到高铁站、2小时到机场。路上打开相册一起翻照片——四天很短，回忆很长。',map:'徐州东站'}
   ]
 };
 
