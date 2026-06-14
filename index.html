@@ -79,8 +79,11 @@
     transition:opacity .5s,visibility .5s;
   }
   #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-  #splash .s-logo{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:3rem;color:var(--gold);font-weight:900}
-  #splash .s-sub{font-size:1rem;color:var(--muted);margin-top:12px;letter-spacing:.08em}
+  #splash .s-logo{font-size:4.5rem;animation:splashBounce 1s ease-out}
+  @keyframes splashBounce{0%{transform:scale(0) rotate(-20deg);opacity:0}60%{transform:scale(1.2) rotate(5deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+  #splash .s-title{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:2.2rem;color:var(--gold);font-weight:900;margin-top:16px;animation:splashSlide .6s .3s ease both}
+  @keyframes splashSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  #splash .s-sub{font-size:.85rem;color:var(--muted);margin-top:8px;letter-spacing:.08em;animation:splashSlide .6s .5s ease both}
   #splash .s-loader{width:40px;height:2px;background:var(--gold);margin-top:32px;border-radius:1px;animation:pulse 1.2s infinite}
   @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
@@ -378,8 +381,9 @@
 <body class="splash-shown">
 
 <div id="splash">
-  <div class="s-logo">徐州攻略</div>
-  <div class="s-sub">6.22-6.25 · 双人游记 · 懒人版</div>
+  <div class="s-logo">🐹</div>
+  <div class="s-title">徐州攻略</div>
+  <div class="s-sub">6.22-6.25 · 双人游记</div>
   <div class="s-loader"></div>
 </div>
 
