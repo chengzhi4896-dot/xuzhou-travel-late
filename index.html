@@ -84,16 +84,16 @@
   #splash .s-title{font-family:'STSong','Songti SC','SimSun','KaiTi',serif;font-size:2.2rem;color:var(--gold);font-weight:900;margin-top:16px;display:flex;gap:6px;justify-content:center}
   .st-char{display:inline-block;opacity:0}
   .st-xu{animation:charStay .7s .3s ease both}
-  .st-qing{animation:charFromTop .7s .7s cubic-bezier(.34,1.56,.64,1) both}
-  .st-lv{animation:charFromRight .7s .95s cubic-bezier(.34,1.56,.64,1) both}
-  .st-zhou{animation:charFromBottom .7s 1.2s cubic-bezier(.34,1.56,.64,1) both}
-  .st-you{animation:charFromLeft .7s 1.45s cubic-bezier(.34,1.56,.64,1) both}
+  .st-qing{animation:charFromTop .7s 1.7s cubic-bezier(.34,1.56,.64,1) both}
+  .st-lv{animation:charFromRight .7s 1.95s cubic-bezier(.34,1.56,.64,1) both}
+  .st-zhou{animation:charFromBottom .7s 2.2s cubic-bezier(.34,1.56,.64,1) both}
+  .st-you{animation:charFromLeft .7s 2.45s cubic-bezier(.34,1.56,.64,1) both}
   @keyframes charStay{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
   @keyframes charFromTop{from{opacity:0;transform:translateY(-120px) scale(1.6)}to{opacity:1;transform:translateY(0) scale(1)}}
   @keyframes charFromRight{from{opacity:0;transform:translateX(120px) scale(1.6)}to{opacity:1;transform:translateX(0) scale(1)}}
   @keyframes charFromBottom{from{opacity:0;transform:translateY(120px) scale(1.6)}to{opacity:1;transform:translateY(0) scale(1)}}
   @keyframes charFromLeft{from{opacity:0;transform:translateX(-120px) scale(1.6)}to{opacity:1;transform:translateX(0) scale(1)}}
-  #splash .s-sub{font-size:.85rem;color:var(--muted);margin-top:8px;letter-spacing:.08em;animation:splashSlide .6s 1.8s ease both}
+  #splash .s-sub{font-size:.85rem;color:var(--muted);margin-top:8px;letter-spacing:.08em;animation:splashSlide .6s 2.8s ease both}
   #splash .s-loader{width:40px;height:2px;background:var(--gold);margin-top:32px;border-radius:1px;animation:pulse 1.2s infinite}
   @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
@@ -594,7 +594,7 @@ function updateThemeIcon(){
 }
 
 // ── Splash ──
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown')},4400);
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown')},5400);
 
 // ── Navigation ──
 const pages={home:'page-home',day1:'page-day1',day2:'page-day2',day3:'page-day3',day4:'page-day4',spots:'page-spots',food:'page-food',couple:'page-couple'};
