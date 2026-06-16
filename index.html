@@ -397,7 +397,7 @@
 </head>
 <body class="splash-shown">
 
-<div id="splash">
+<div id="splash"><audio id="splash-audio" src="splash.mp3" preload="auto"></audio>
   <div class="s-logo"><img src="splash.gif" alt="噜噜" width="100" height="100" style="border-radius:50%"></div>
   <div class="s-title" style="flex-direction:column;gap:4px">
     <span style="display:flex;gap:6px;justify-content:center">
@@ -427,7 +427,7 @@
 </div>
 
 <!-- ═══ HOME ═══ -->
-<div class="page active" id="page-home">
+<div class="page active" id="page-home"><audio id="ambient-audio" src="ambient.mp3" preload="auto" loop></audio>
   <div class="hero">
     <div class="pengcheng-watermark">彭 城</div>
     <h1>徐州</h1>
@@ -610,7 +610,8 @@ function updateThemeIcon(){
 }
 
 // ── Splash ──
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown')},7000);
+var sa=document.getElementById('splash-audio');if(sa){sa.volume=0.5;try{sa.play().catch(function(){})}catch(e){}}
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown');var aa=document.getElementById('ambient-audio');if(aa){aa.volume=0.15;try{aa.play().catch(function(){})}catch(e){}}},7000);
 
 // ── Navigation ──
 const pages={home:'page-home',day1:'page-day1',day2:'page-day2',day3:'page-day3',day4:'page-day4',spots:'page-spots',food:'page-food',couple:'page-couple'};
@@ -635,12 +636,11 @@ document.querySelectorAll('.day-chip').forEach((chip,i)=>{
 const timelineData = {
   day1: [
     {time:'12:00',title:'抵达徐州 · 入住酒店',desc:'徐州东站（推荐高铁）或观音机场 → 打车约30分钟到泉山区酒店 → 放行李换舒服衣服',detail:'徐州东站距市中心约12km，打车¥30。观音机场距市区约45km，打车¥80-100。酒店选泉山区云龙湖周边最方便。入住后稍作休整，准备出发。',map:'徐州东站'},
-    {time:'12:30',title:'🤗💋🙌 亲亲抱抱举高高',desc:'四天旅程正式开始！进了酒店房间放好行李，第一件事——把她抱起来转一圈，亲一口，说一句「宝贝，我们的徐州之旅开始了」。仪式感拉满 ✨',detail:'别问为什么，照做就对了。旅途第一天，她还在适应陌生的城市，这一刻的拥抱和亲吻会让她瞬间放松下来。如果抱不动的话……抱起一半也算😄。关键是让她感受到你的开心和期待。',map:null},
+    {time:'12:30',title:'🤗💋🙌 亲亲抱抱举高高',desc:'四天旅程正式开始！进了酒店房间放好行李，第一件事——把她抱起来转一圈，亲一口，说一句「宝贝，我们的徐州之旅开始了」。仪式感拉满 ✨',detail:'',map:null},
     {time:'13:00',title:'午餐 · 第一顿地锅鸡',desc:'「大张烙馍村」（泉山区湖北路）或「彭城一号」——铁锅端上来还在咕嘟，面饼贴锅边吸饱汤汁，两人一份地锅鸡+烙馍卷馓子刚好',detail:'大张烙馍村：泉山区湖北路与二环西路交叉口。彭城一号在市中心彭城路。两人推荐：地锅鸡¥88 + 烙馍卷馓子¥18 + 米饭，¥120吃饱。',map:'大张烙馍村'},
     {time:'15:00',title:'云龙湖景区 · 环湖漫步+脚踏船',desc:'音乐厅广场→湖心岛→苏公塔→水上世界，走走停停约2h。湖心岛码头租脚踏船¥40/30min，两个人踩着船漂在湖中央 🚣',detail:'环湖约5km，可骑共享单车或坐景区电瓶车¥10/人。脚踏船在湖心岛码头，¥40/30分钟押金¥100。强烈推荐！湖中央看四周山色特别惬意。',map:'云龙湖音乐厅广场'},
     {time:'17:30',title:'云龙山观景台 · 等日落',desc:'西门上山步行20分钟登观景台。6月日落约19:20，金色光线打满湖面和老城天际线——徐州最美的20分钟 📸',detail:'云龙山西门免费入，步行约20分钟登顶。别坐索道，登山过程更有感觉。观景台最上层栏杆是最佳拍摄位——逆光人像超美，记得带相机。',map:'云龙山观景台'},
-    {time:'18:00',title:'🤗 抱一抱 · 日落时刻',desc:'日落光线最温柔的那几分钟，从背后抱住她，下巴轻轻搁在她肩膀上。云龙湖在脚下泛着金光——这一刻不需要任何话，整个世界只剩下两个人的心跳 💕',detail:'最佳时机：太阳刚好碰到地平线的时候（约19:20）。站在观景台最上层，面向湖面的方向。让路人帮拍一张背影合照——你们站在金色暮光里，她在前你在后环抱着她。',map:null},
-    {time:'18:05',title:'💋 亲一亲 · 金色暮光',desc:'日落的光打在她侧脸上好看得不像话——别犹豫，轻轻亲一下她的脸颊或者嘴唇。暮光作证，这是徐州送给你们的第一个礼物',detail:'脸颊就行别太猛——观景台还有其他游客呢😄。如果脸皮薄也可以等下山后在湖边没人的地方补一个。重点是：金色暮光 + 湖面倒影 = 电影级别的浪漫镜头。',map:null},
+
     {time:'19:30',title:'户部山夜市 · 逛吃晚餐',desc:'下山步行10分钟到户部山历史文化街区——古民居灯笼亮起很有氛围，烙馍卷馓子、蛙鱼、炸串一路吃，当晚饭解决',detail:'推荐小吃：烙馍卷馓子¥8、蛙鱼¥6、炸串¥2/串。古民居亮灯后适合拍照，穿浅色衣服更出片。一路边走边吃就是最接地气的徐州夜生活。',map:'户部山历史文化街区'},
     {time:'22:00',title:'回酒店',desc:'第一天别太累，泡杯茶窝在一起翻翻明天的攻略，养足精神 💤',detail:'便利店买两瓶水+小零食带回酒店。睡前确认Day2行程：楚王陵→兵马俑→博物馆→烧烤。注意：徐州博物馆周一闭馆，6/23是周一，建议调整到Day3.',map:null}
   ],
