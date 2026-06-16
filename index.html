@@ -397,7 +397,7 @@
 </head>
 <body class="splash-shown">
 
-<div id="splash"><audio id="splash-audio" src="splash.mp3" preload="auto"></audio>
+<div id="splash">
   <div class="s-logo"><img src="splash.gif" alt="噜噜" width="100" height="100" style="border-radius:50%"></div>
   <div class="s-title" style="flex-direction:column;gap:4px">
     <span style="display:flex;gap:6px;justify-content:center">
@@ -427,7 +427,7 @@
 </div>
 
 <!-- ═══ HOME ═══ -->
-<div class="page active" id="page-home"><audio id="ambient-audio" src="ambient.mp3" preload="auto" loop></audio>
+<div class="page active" id="page-home">
   <div class="hero">
     <div class="pengcheng-watermark">彭 城</div>
     <h1>徐州</h1>
@@ -502,7 +502,7 @@
 
 <!-- ═══ DAY 3 ═══ -->
 <div class="page" id="page-day3">
-  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 3</h1><div class="h-sub">6月24日 周二 · 古韵悠然</div><div class="h-dates">🪨 龟山汉墓 → 彭祖园 → 博物馆 → 影院之夜 🎬</div></div>
+  <div class="hero" style="padding:28px 16px"><h1 style="font-size:2rem">Day 3</h1><div class="h-sub">6月24日 周二 · 古韵悠然</div><div class="h-dates">🪨 龟山汉墓 → 博物馆 → 彭祖园 → 影院之夜 🎬</div></div>
   <div class="section-hd"><span class="sh-icon">⏱️</span><span class="sh-title">行程时间线</span><span class="sh-line"></span><span style="font-size:.65rem;color:var(--dim)">点击展开详情</span></div>
   <div class="timeline" id="timeline-day3"></div>
   <div style="background:linear-gradient(135deg,rgba(181,52,58,.15),rgba(201,169,110,.08));border:1px solid rgba(201,169,110,.2);border-radius:16px;padding:18px 20px;margin:12px 0;color:#e8c8a0;font-size:.82rem;line-height:1.6">
@@ -610,8 +610,7 @@ function updateThemeIcon(){
 }
 
 // ── Splash ──
-var sa=document.getElementById('splash-audio');if(sa){sa.volume=0.5;try{sa.play().catch(function(){})}catch(e){}}
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown');var aa=document.getElementById('ambient-audio');if(aa){aa.volume=0.15;try{aa.play().catch(function(){})}catch(e){}}},7000);
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');document.body.classList.remove('splash-shown')},7000);
 
 // ── Navigation ──
 const pages={home:'page-home',day1:'page-day1',day2:'page-day2',day3:'page-day3',day4:'page-day4',spots:'page-spots',food:'page-food',couple:'page-couple'};
@@ -656,8 +655,8 @@ const timelineData = {
   day3: [
     {time:'11:00',title:'酒店出发 · 街边早午餐',desc:'再来一碗辣汤+煎包锅贴，把徐州清晨的味道刻进记忆。如果昨天博物馆没去成，今天第一站补上',detail:'两来风解放路店离酒店不远。辣汤¥5+煎包¥2×4+锅贴¥2×2=人均¥13。吃完精神满满出发。',map:'两来风解放路店'},
     {time:'12:30',title:'龟山汉墓 · 鬼斧神工',desc:'西汉楚襄王刘注夫妇合葬墓——两条平行甬道长56米，夹角精度1/16000，两千年前没激光怎么做到的至今是谜。走在甬道里两侧石壁完全对称，像穿过时空隧道',detail:'门票¥25/人，旁边圣旨博物馆+点石园石刻馆联票¥35/人。甬道内幽暗安静，牵手慢慢走——两千年前的工匠为这对夫妇建了永恒的家。',map:'龟山汉墓'},
-    {time:'14:00',title:'彭祖园 · 梧桐林荫',desc:'免费公园但比想象中大——古树遮天+彭祖雕像+小动物园（孔雀🦚）。两个人牵手在梧桐林荫道慢慢走，累了坐长椅看大爷下棋',detail:'泉山区，从龟山汉墓打车¥12/15分钟。园内彭祖雕像高38米，梧桐林荫道是拍照圣地——阳光透过树叶洒下来特别好看。',map:'彭祖园'},
-    {time:'16:00',title:'徐州博物馆 <span class="need-book">（需预约）</span>',desc:'如果昨天因为周一闭馆没去成，今天补上。镇馆之宝金缕玉衣+汉画像石+汉代玉器，馆内空调足慢慢逛。出来后顺便逛乾隆行宫遗址',detail:'公众号「徐州博物馆」提前1-2天预约，凭身份证入馆。周二正常开放，下午人少。博物馆后面乾隆行宫免费参观，小园林10分钟逛完。',map:'徐州博物馆'},
+    {time:'14:00',title:'徐州博物馆 <span class="need-book">（需预约）</span>',desc:'如果昨天因为周一闭馆没去成，今天补上。镇馆之宝金缕玉衣+汉画像石+汉代玉器，馆内空调足慢慢逛。出来后乾隆行宫遗址逛精致小园林',detail:'公众号「徐州博物馆」提前1-2天预约，凭身份证入馆。周二正常开放，下午人少。16:30停止入馆，14:00前进馆可逛足2-2.5小时。乾隆行宫在博物馆后面免费参观。',map:'徐州博物馆'},
+    {time:'16:30',title:'彭祖园 · 梧桐林荫',desc:'博物馆出来打车10分钟到彭祖园——免费公园古树遮天+彭祖雕像+小动物园（孔雀🦚）。牵手在梧桐林荫道慢慢走累了坐长椅看大爷下棋',detail:'泉山区，从博物馆打车¥10/10分钟。梧桐林荫道黄昏前光线透过树叶洒下拍照圣地。逛1小时足够然后直接去晚餐。',map:'彭祖园'},
     {time:'18:30',title:'晚餐 · 再来一顿徐州味',desc:'「徐州饭店」淮海西路老字号——羊方藏鱼（四千年彭祖名菜），鱼肉藏在羊肉里炖汤白肉嫩。或者回刷大张烙馍村再吃一顿地锅鸡',detail:'徐州饭店：淮海西路。推荐：羊方藏鱼¥128+糖醋黄河鲤鱼¥68。羊方藏鱼需提前40分钟制作到店先下单。或者大张烙馍村再刷地锅鸡¥88——闭眼选都好吃。',map:'徐州饭店'},
     {time:'20:00',title:'🎬 影院之夜 · 两个人的电影',desc:'找一家电影院看一场电影——逛了两天古迹，今晚放松一下。牵着她的手坐在黑暗里，大银幕的光映在两张脸上，这是旅行中最好的休息方式 🍿',detail:'推荐影院：①万达影城（云龙万达广场）②CGV影城（苏宁广场）③中影国际影城（彭城壹号）。选一部两人都想看的，买一桶爆米花两杯可乐。电影结束牵着手走回酒店，聊刚才的剧情——比逛古镇舒服多了。',map:'万达影城徐州云龙店'},
     {time:'22:30',title:'回酒店 · 收拾行李准备明天返程',desc:'电影散场慢慢散步回酒店，最后收拾一下行李。睡前窝在一起聊聊这几天最开心的瞬间 💤',detail:'Day3结束——明天是返程日，今晚稍微整理一下行李，伴手礼和脏衣服分开放。Day4还有戏马台+回龙窝+饯行午饭，不用太早睡。',map:null}
